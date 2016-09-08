@@ -2,12 +2,13 @@
 #include <cmath>
 #include <fstream>
 #include <time.h>
+#include "special.cpp"
 
 using namespace std;
 
 int main()
 {
-    int const n = 100;
+    int const n = 10;
     double h = 1./(n+1);
     double *b_arr = new double[n]; //should contain 1's
     double *a_arr = new double[n];   //should contain -2's
@@ -50,6 +51,9 @@ int main()
     outFile << 0 <<endl;
     outFile.close();
 
+    special();
+
     return 0;
+
 }
 
