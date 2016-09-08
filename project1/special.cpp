@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main()
+int special()
 {
     int const n = 10;
     double h = 1./(n+1);
@@ -16,7 +16,6 @@ int main()
     double *f_arr = new double[n];
     double *f_tilde = new double[n];
     double *a_tilde = new double[n];
-
 
     //setting values of known arrays
     for(int i=0; i<n; i++){
@@ -30,8 +29,8 @@ int main()
 
     //forward substitution for a_tilde and f_tilde
     for (int i=0; i < n-1; i++) {
-        a_tilde[i+1] = a_arr[i+1] - (b_arr[i+1]*c_arr[i])/a_tilde[i];
-        f_tilde[i+1] = f_arr[i+1] - f_tilde[i]*(c_arr[i+1]/a_arr[i]);
+        a_tilde[i+1] = a_arr[i+1] - (b_arr[i]*c_arr[i])/a_tilde[i];
+        f_tilde[i+1] = f_arr[i+1] - f_tilde[i+1]*(c_arr[i]/a_arr[i]);
 
         cout<<"f_tilde= "<<f_tilde[i]<<"  a_tilde= "<<a_tilde[i]<<endl;
     }
@@ -39,7 +38,7 @@ int main()
     //backward substitution for u_arr
     u_arr[n-1] = f_tilde[n-1] / a_tilde[n-1];
     for(int j=n-2; j>0; j--){ //loop to calculate u
-        u_arr[j] = (f_tilde[j] - b_arr[j-1]*u_arr[j+1])/a_tilde[j-1];
+        u_arr[j] = (f_tilde[j] - b_arr[j]*u_arr[j+1])/a_tilde[j];
         cout << "u_Arr= " << u_arr[j]<<endl;
     }
 
@@ -54,4 +53,3 @@ int main()
 
     return 0;
 }
-

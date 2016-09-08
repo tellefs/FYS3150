@@ -13,7 +13,7 @@ infile.close()
 
 x = np.linspace(0, 1, 1000)
 u_exact = 1 - (1-np.exp(-10))*x - np.exp(-10*x)
-
+	
 plt.plot(x, u_exact, label="u_exact")
 plt.plot(x_axis, u_arr, label="u_arr")
 plt.legend()
