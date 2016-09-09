@@ -32,7 +32,7 @@ int main()
     //forward substitution for a_tilde and f_tilde
     for (int i=0; i < n-1; i++) {
         a_tilde[i+1] = a_arr[i+1] - (b_arr[i+1]*c_arr[i+1])/a_tilde[i];
-        f_tilde[i+1] = f_arr[i+1] - f_tilde[i]*(c_arr[i+1]/a_tilde[i]);
+        f_tilde[i+1] = f_arr[i+1] - f_tilde[i]*(c_arr[i]/a_tilde[i]);
     }
 
     //backward substitution for u_arr
