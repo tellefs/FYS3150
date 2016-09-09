@@ -51,7 +51,7 @@ int main()
     outFile << 0 <<endl;
     outFile.close();
 
-    special();
+    special(n);
 
     return 0;
 
