@@ -37,8 +37,8 @@ int main()
 
     //backward substitution for u_arr
     u_arr[n-1] = f_tilde[n-1] / a_tilde[n-1];
-    for(int j=n-2; j>=0; j--){ //loop to calculate u
-        u_arr[j] = (f_tilde[j] - b_arr[j]*u_arr[j+1])/a_tilde[j];
+    for(int i=n-2; i>=0; i--){ //loop to calculate u
+        u_arr[i] = (f_tilde[i] - b_arr[i]*u_arr[i+1])/a_tilde[i];
     }
 
     //writing to file
