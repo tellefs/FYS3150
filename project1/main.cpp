@@ -5,12 +5,14 @@
 #include "special.cpp"
 #include "error.cpp"
 #include "LU_decomp.h"
+#include "armadillo"
 
 using namespace std;
+using namespace arma;
 
 int main()
 {
-    int const n = 100;
+    int const n = 1000;
     double h = 1./(n+1);
     double *b_arr = new double[n]; //should contain 1's
     double *a_arr = new double[n];   //should contain -2's
@@ -31,7 +33,7 @@ int main()
         f_tilde[0] = f_arr[0];
     }
 
-    clock_t start, finish;
+    clock_t start, finish; //to find the time the algorithm takes
     start = clock();
 
     //forward substitution for a_tilde and f_tilde
@@ -46,7 +48,7 @@ int main()
         u_arr[i] = (f_tilde[i] - b_arr[i]*u_arr[i+1])/a_tilde[i];
     }
     finish = clock();
-    cout<<"the time for gaussian elimination is "<<((double) (finish - start)/CLOCKS_PER_SEC)<<" sec."<<endl;
+    cout<<"time for gaussian elimination is "<<((double) (finish - start)/CLOCKS_PER_SEC)<<" sec."<<endl;
 
     //writing to file
     ofstream outFile;
@@ -58,6 +60,7 @@ int main()
     outFile << 0 <<endl;
     outFile.close();
 
+    //the rest of the programs to the project
     special(n);
     error(n, u_arr, h);
     LU_decomp(n, f_arr);

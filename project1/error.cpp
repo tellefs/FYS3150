@@ -13,7 +13,7 @@ int error(int n, double *u_arr, double h)
     for(int i=0; i<n-1; i++){
         double x = (i+1)*h;
         exact_array[i+1] = 1 - (1-exp(-10))*x - exp(-10*x); //the exact solution
-        error_array[i+1] = log10(abs((u_arr[i+1]- exact_array[i+1])/exact_array[i+1]));
+        error_array[i+1] = fabs(u_arr[i+1]- exact_array[i+1])/fabs(exact_array[i+1]);
     }
     //writing to file
     ofstream outFile;
@@ -24,7 +24,6 @@ int error(int n, double *u_arr, double h)
     }
     outFile << 0 <<endl;
     outFile.close();
-
 
     return 0;
 }

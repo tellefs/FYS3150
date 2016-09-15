@@ -30,17 +30,16 @@ for line in infile:
 	values= line.split()
 	error.append(float(values[0]))
 infile.close()
-print error
-print abs(min(error))	
+	
 
 
 plt.plot(x, u_exact, label="u_exact")
 plt.plot(x_axis, u_arr, label="u_arr")
 plt.plot(x_axis, u_arr_special, label='u_arr_special')
-plt.plot(x_axis, error)
+plt.xlabel('x')
+plt.ylabel('U(x)')
 plt.legend()
+plt.title('Plot for n = %i' %(n-2))
 plt.show()
 
-
-	
 
