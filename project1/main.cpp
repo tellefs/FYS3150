@@ -4,12 +4,13 @@
 #include <time.h>
 #include "special.cpp"
 #include "error.cpp"
+#include "LU_decomp.h"
 
 using namespace std;
 
 int main()
 {
-    int const n = 1000;
+    int const n = 100;
     double h = 1./(n+1);
     double *b_arr = new double[n]; //should contain 1's
     double *a_arr = new double[n];   //should contain -2's
@@ -30,6 +31,9 @@ int main()
         f_tilde[0] = f_arr[0];
     }
 
+    clock_t start, finish;
+    start = clock();
+
     //forward substitution for a_tilde and f_tilde
     for (int i=0; i < n-1; i++) {
         a_tilde[i+1] = a_arr[i+1] - (b_arr[i+1]*c_arr[i+1])/a_tilde[i];
@@ -41,6 +45,8 @@ int main()
     for(int i=n-2; i>=0; i--){ //loop to calculate u
         u_arr[i] = (f_tilde[i] - b_arr[i]*u_arr[i+1])/a_tilde[i];
     }
+    finish = clock();
+    cout<<"the time for gaussian elimination is "<<((double) (finish - start)/CLOCKS_PER_SEC)<<" sec."<<endl;
 
     //writing to file
     ofstream outFile;
@@ -53,7 +59,8 @@ int main()
     outFile.close();
 
     special(n);
-    error(n, u_arr);
+    error(n, u_arr, h);
+    LU_decomp(n, f_arr);
 
 
     return 0;

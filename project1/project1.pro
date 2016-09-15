@@ -8,5 +8,7 @@ SOURCES += main.cpp \
     error.cpp \
     LU_decomp.cpp
 
-HEADERS +=
+HEADERS += \
+    LU_decomp.h
 
+LIBS += -larmadillo -llapack -lblas

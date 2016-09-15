@@ -22,20 +22,23 @@ int special(int n)
     a_tilde[0] = 2;
     f_tilde[0] = f_arr[0];
 
+    clock_t start, finish;
+    start = clock();
     //forward sub.
 
     for(int i=0; i<n; i++){
         a_tilde[i+1] = (i+3.)/(i+2.);
         f_tilde[i+1] = f_arr[i+1] + f_tilde[i]*(i+1.)/(i+2.);
-        cout<<"f_tilde= "<<f_tilde[i]<<" a_tilde= "<<a_tilde[i]<<endl;
     }
 
     //backward sub.
     u_arr[n-1] = f_tilde[n-1] / a_tilde[n-1]; //initial conditions
     for(int i=n-2; i>=0; i--){ //loop to calculate u
         u_arr[i] = ((i+1)/(i+2.))*(f_tilde[i]+u_arr[i+1]);
-        cout<<"u_arr = "<<u_arr[i]<<endl;
     }
+
+    finish = clock();
+    cout<<"time for special gaussian is "<< ((double) (finish-start)/CLOCKS_PER_SEC)<<" sec."<<endl;
 
     //writing to file
     ofstream outFile;

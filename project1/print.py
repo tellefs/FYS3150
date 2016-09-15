@@ -24,10 +24,20 @@ for line in infile:
 	u_arr_special.append(float(values[0]))
 infile.close()
 
-	
+infile = open('error_data.dat', 'r')
+error = [];
+for line in infile:
+	values= line.split()
+	error.append(float(values[0]))
+infile.close()
+print error
+print abs(min(error))	
+
+
 plt.plot(x, u_exact, label="u_exact")
 plt.plot(x_axis, u_arr, label="u_arr")
 plt.plot(x_axis, u_arr_special, label='u_arr_special')
+plt.plot(x_axis, error)
 plt.legend()
 plt.show()
 
