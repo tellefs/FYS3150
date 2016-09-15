@@ -3,12 +3,13 @@
 #include <fstream>
 #include <time.h>
 #include "special.cpp"
+#include "error.cpp"
 
 using namespace std;
 
 int main()
 {
-    int const n = 10;
+    int const n = 1000;
     double h = 1./(n+1);
     double *b_arr = new double[n]; //should contain 1's
     double *a_arr = new double[n];   //should contain -2's
@@ -52,6 +53,8 @@ int main()
     outFile.close();
 
     special(n);
+    error(n, u_arr);
+
 
     return 0;
 
