@@ -12,7 +12,7 @@ using namespace arma;
 
 int main()
 {
-    int const n = 1000;
+    int const n = 10;
     double h = 1./(n+1);
     double *b_arr = new double[n]; //should contain 1's
     double *a_arr = new double[n];   //should contain -2's

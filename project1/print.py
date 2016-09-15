@@ -30,12 +30,20 @@ for line in infile:
 	values= line.split()
 	error.append(float(values[0]))
 infile.close()
+
+infile = open('LU_data.dat', 'r')
+LU_comp = [];
+for line in infile:
+	values= line.split()
+	LU_comp.append(float(values[0]))
+infile.close()
 	
 
 
 plt.plot(x, u_exact, label="u_exact")
 plt.plot(x_axis, u_arr, label="u_arr")
 plt.plot(x_axis, u_arr_special, label='u_arr_special')
+plt.plot(x_axis, LU_comp, label="LU-decomp.")
 plt.xlabel('x')
 plt.ylabel('U(x)')
 plt.legend()

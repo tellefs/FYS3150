@@ -40,6 +40,15 @@ int LU_decomp(int n, double *f_arr){
     finish = clock();
     cout<<"time for LU-decomp is "<< ((double) (finish-start)/CLOCKS_PER_SEC)<<" sec."<<endl;
 
+    //writing to file
+    ofstream outFile;
+    outFile.open("../../project1/LU_data.dat", ios::out);
+    outFile << 0 << endl;
+    for (int i =0; i < n; i++) {
+        outFile << x(i) << endl;
+    }
+    outFile << 0 <<endl;
+    outFile.close();
 
 
     return 0;
