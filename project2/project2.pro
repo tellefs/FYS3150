@@ -3,9 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.c \
-    jacobi_solver.cpp
+SOURCES += \
+    main.cpp
 
-HEADERS += \
-    jacobi_solver.h
+HEADERS +=
 
