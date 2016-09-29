@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cmath>
 #include <iostream>
@@ -14,7 +15,7 @@ int main()
 {
     //defining constants
     double rho_min = 0;
-    double rho_max = 5; //must test this value for different values of rho_max
+    double rho_max = 5;
 
     int N = 50;
     double h = (rho_max - rho_min)/N;
@@ -55,7 +56,6 @@ int main()
 //function to solve the matrix with the jacobi-algorithm
 void jacobiSolver(mat A, int N){
 
-    //A.print();
     double epsilon = 1e-8;
     int k = 0; int l=0;
 
@@ -75,7 +75,7 @@ void jacobiSolver(mat A, int N){
             t = 1./(tau + sqrt(1 + tau*tau));
         }
 
-        c = 1./(1 + t*t);
+        c = 1./sqrt(1 + t*t);
         s = t*c;
 
         //now defining the new elements in the matrix A
@@ -83,8 +83,8 @@ void jacobiSolver(mat A, int N){
         a_kk = A(k,k);
         a_ll = A(l,l);
 
-        a_kk = a_kk*c*c - 2*A(k,l)*c*s + a_ll*s*s;
-        a_ll = a_ll*c*c + 2*A(k,l)*c*s + a_kk*s*s;
+        A(k,k) = a_kk*c*c - 2*A(k,l)*c*s + a_ll*s*s;
+        A(l,l) = a_ll*c*c + 2*A(k,l)*c*s + a_kk*s*s;
         A(k,l) = 0.0;
         A(l,k) = 0.0;
 
@@ -104,15 +104,15 @@ void jacobiSolver(mat A, int N){
 
     }
 
+
     vec eigvals = zeros<vec>(N);
-    //printing the diagonal elements aka. the eigenvalues
+    //sorting the eigenvalues
     for(int i=0; i<N; i++){
             eigvals(i) = A(i,i);
     }
-
     eigvals = sort(eigvals);
 
-    cout << eigvals(0) << endl;
+    cout << eigvals(0) << endl; //printing the lowest eigenvalue
 
 }
 
