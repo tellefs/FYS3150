@@ -20,7 +20,7 @@ int main()
     double rho_min = 0;
     double rho_max = 5;
 
-    int N = 50;
+    int N = 100;
     double h = (rho_max - rho_min)/N;
     double e_i = -1./(h*h); //the off diagonal entries to the tri-diagonal matrix
     double omega_r = 5.;
@@ -32,8 +32,8 @@ int main()
 
     for(int i=0; i<N; i++){
         rho(i) = rho_min + (i+1)*h;
-        //V(i) = rho(i)*rho(i); //the potential energy
-        V(i) = omega_r*omega_r*rho(i)*rho(i) + 1./rho(i); //the new potential for problem 2.d
+        V(i) = omega_r*rho(i)*rho(i); //the potential energy, non interaction
+        //V(i) = omega_r*omega_r*rho(i)*rho(i) + 1./rho(i); //the new potential, interaction
         d(i) = 2./(h*h) + V(i); //the diagonal entries to the matrix
     }
 
@@ -205,7 +205,7 @@ void find_print_lowest_eigenvec_val(mat &X, mat &Y, int N){
 
     //writing to file
     ofstream outFile;
-    outFile.open("../project2/interaction_omega5.dat", ios::out);
+    outFile.open("../project2/non_interaction_omega5.dat", ios::out);
     for (int i =0; i < N; i++) {
         outFile <<eigenvector(i)<< endl;
     }

@@ -1,0 +1,129 @@
+import numpy as np
+import matplotlib.pyplot as mplt
+
+
+#non interaction case, omega=0.01
+infile = open('non_interaction_omega001.dat', 'r')
+non_interaction_omega001 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	non_interaction_omega001.append(float(values[0]))
+	n=n+1
+infile.close()
+
+#interaction case, omega=0.01
+
+infile = open('interaction_omega001.dat', 'r')
+interaction_omega001 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	interaction_omega001.append(float(values[0]))
+	n=n+1
+infile.close()
+
+x_axis = np.linspace(0, 20, n)
+mplt.plot(x_axis, interaction_omega001, label='interaction, $\Omega_R = 0.01$')
+mplt.plot(x_axis, non_interaction_omega001, label='non interaction, $\Omega_R = 0.01$')
+mplt.xlabel('relative coordinate $r$')
+mplt.ylabel('Wave func $\Psi$')
+mplt.legend()
+mplt.show()
+
+
+
+
+#non interaction case, omega=0.5
+infile = open('non_interaction_omega05.dat', 'r')
+non_interaction_omega05 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	non_interaction_omega05.append(float(values[0]))
+	n=n+1
+infile.close()
+
+#interaction case, omega=0.5
+
+infile = open('interaction_omega05.dat', 'r')
+interaction_omega05 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	interaction_omega05.append(float(values[0]))
+	n=n+1
+infile.close()
+
+x_axis = np.linspace(0, 10, n)
+mplt.plot(x_axis, interaction_omega05, label='interaction, $\Omega_R = 0.5$')
+mplt.plot(x_axis, non_interaction_omega05, label='non interaction, $\Omega_R = 0.5$')
+mplt.xlabel('relative coordinate $r$')
+mplt.ylabel('Wave func $\Psi$')
+mplt.legend()
+mplt.show()
+
+
+
+
+
+#non interaction case, omega=1
+infile = open('non_interaction_omega1.dat', 'r')
+non_interaction_omega1 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	non_interaction_omega1.append(float(values[0]))
+	n=n+1
+infile.close()
+
+#interaction case, omega=1
+
+infile = open('interaction_omega1.dat', 'r')
+interaction_omega1 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	interaction_omega1.append(float(values[0]))
+	n=n+1
+infile.close()
+
+x_axis = np.linspace(0, 5, n)
+mplt.plot(x_axis, interaction_omega1, label='interaction, $\Omega_R = 1$')
+mplt.plot(x_axis, non_interaction_omega1, label='non interaction, $\Omega_R = 1$')
+mplt.xlabel('relative coordinate $r$')
+mplt.ylabel('Wave func $\Psi$')
+mplt.legend()
+mplt.show()
+
+
+
+#non interaction case, omega=5
+infile = open('non_interaction_omega5.dat', 'r')
+non_interaction_omega5 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	non_interaction_omega5.append(float(values[0]))
+	n=n+1
+infile.close()
+
+#interaction case, omega=5
+
+infile = open('interaction_omega5.dat', 'r')
+interaction_omega5 = [];
+n = 0
+for line in infile:
+	values= line.split()
+	interaction_omega5.append(float(values[0]))
+	n=n+1
+infile.close()
+
+x_axis = np.linspace(0, 5, n)
+mplt.plot(x_axis, interaction_omega5, label='interaction, $\Omega_R = 5$')
+mplt.plot(x_axis, non_interaction_omega5, label='non interaction, $\Omega_R = 5$')
+mplt.xlabel('relative coordinate $r$')
+mplt.ylabel('Wave func $\Psi$')
+mplt.legend()
+mplt.show()
+
