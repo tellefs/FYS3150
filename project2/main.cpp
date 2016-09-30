@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <armadillo>
+#include <fstream>
 
 using namespace std;
 using namespace arma;
@@ -11,6 +12,7 @@ double maxOffDiag(mat, int, int &, int &);
 void rotate();
 void test_eigenvectors(mat, int);
 void test_maxOffDiag();
+void find_print_lowest_eigenvec_val(mat &, mat &, int);
 
 int main()
 {
@@ -21,8 +23,7 @@ int main()
     int N = 50;
     double h = (rho_max - rho_min)/N;
     double e_i = -1./(h*h); //the off diagonal entries to the tri-diagonal matrix
-    double omega_r = 0.01;
-
+    double omega_r = 5.;
 
     vec V = zeros<vec>(N);
     vec rho = zeros<vec>(N);
@@ -31,8 +32,8 @@ int main()
 
     for(int i=0; i<N; i++){
         rho(i) = rho_min + (i+1)*h;
-        V(i) = rho(i)*rho(i); //the potential energy
-        //V(i) = omega_r*omega_r*rho(i)*rho(i) + 1./rho(i); //the new potential for problem 2.d
+        //V(i) = rho(i)*rho(i); //the potential energy
+        V(i) = omega_r*omega_r*rho(i)*rho(i) + 1./rho(i); //the new potential for problem 2.d
         d(i) = 2./(h*h) + V(i); //the diagonal entries to the matrix
     }
 
@@ -56,10 +57,9 @@ int main()
 
 
     jacobiSolver(A, R, N);
-
-
     test_eigenvectors(R, N);
     test_maxOffDiag();
+    find_print_lowest_eigenvec_val(A, R, N);
 
     return 0;
 }
@@ -117,7 +117,7 @@ void jacobiSolver(mat &A, mat &R, int N){
             r_ik = R(i,k);
             r_il = R(i,l);
             R(i,k) = c*r_ik - s*r_il;
-            R(i,k) = c*r_il + s*r_ik;
+            R(i,l) = c*r_il + s*r_ik;
         }
 
         max_off = maxOffDiag(A, N, k, l);
@@ -150,17 +150,12 @@ void test_maxOffDiag(){
     int k,l;
     double maxVal = maxOffDiag(X, 3, k, l);
     if((maxVal != 8) || (k!=2) || (l!=1)){
-        cout<<"fuck off, your maxOffDiag function is wrong and it sucks, get it together Gary"<<endl;
+        cout<<"fuck off, your maxOffDiag function is wrong and it sucks, get it together Costanza"<<endl;
         cout << "maxVal = " << maxVal << endl;
         cout << "k = " << k << endl;
         cout << "l = " << l << endl;
     }
-
 }
-
-
-
-
 
 
 
@@ -182,20 +177,41 @@ double maxOffDiag(mat A, int N, int& k, int& l){
 }
 
 
-
-
-
 void test_eigenvectors(mat X, int n){
     //function for testing of the eigenvectors are orthogonal
     double tol = 1e-5;
     for(int i=0; i<n; i++){
         for(int j=0; j<n; j++){
-            if(i!=j && dot(X.row(i), X.row(j)) > tol ){
-                cout<<"eigevectors "<<i<<", "<<j<<" are not orthogonal, dot product is: " << dot(X.row(i), X.row(j)) <<endl;
+            if(i!=j && dot(X.col(i), X.col(j)) > tol ){
+                cout<<"eigevectors "<<i<<", "<<j<<" are not orthogonal, dot product is: " << dot(X.col(i), X.col(j)) <<endl;
             }
         }
     }
 }
+
+void find_print_lowest_eigenvec_val(mat &X, mat &Y, int N){
+
+    //finding lowest
+    double lowest_eigenval = 1e10;
+    int index = 0;
+
+    for(int i=0; i<N; i++){
+        if(X(i,i) < lowest_eigenval){
+            lowest_eigenval = X(i,i);
+            index = i;
+        }
+    }
+    vec eigenvector = Y.col(index);
+
+    //writing to file
+    ofstream outFile;
+    outFile.open("../project2/interaction_omega5.dat", ios::out);
+    for (int i =0; i < N; i++) {
+        outFile <<eigenvector(i)<< endl;
+    }
+    outFile.close();
+}
+
 
 
 
