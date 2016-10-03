@@ -21,10 +21,10 @@ int main()
     double rho_min = 0;
     double rho_max = 5;
 
-    int N = 200;
+    int N = 100;
     double h = (rho_max - rho_min)/N;
     double e_i = -1./(h*h); //the off diagonal entries to the tri-diagonal matrix
-    double omega_r = 1;
+    double omega_r = 0.01;
 
     vec V = zeros<vec>(N);
     vec rho = zeros<vec>(N);
@@ -60,7 +60,9 @@ int main()
 
     clock_t start, finish; //to find the time the algorithm takes
     start = clock();
+
     jacobiSolver(A, R, N);
+
     finish = clock();
     cout<<"time for our general method is "<<((double) (finish - start)/CLOCKS_PER_SEC)<<" sec."<<endl;
 
