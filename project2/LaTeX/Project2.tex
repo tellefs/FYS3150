@@ -379,8 +379,44 @@ Numerically it is sufficient that the largest non-diagonal element is smaller th
 Convergence is guaranteed with the Jacobi method, however the number of floating point operations is quite large, $\mathcal{O}(12n^{3})$ operations in order to zero out non-diagonal elements.
 
 
+\section{RESULTS AND DISCUSSION}
 
-%\tableofcontents
+\subsection{Programming precision}
+First we checked how many mesh points $N$ we needed. We ran the program for a system where we knew the lowest eigenvalue and wanted the difference to be less than $10^{-4}$. When doing this for a known problem where the lowest eigenvalue should have been $\lambda_{theory} = 3$ we found that we needed $N=200$ mesh points to get this presicion.\\
+
+\subsection{Comparison between different $\omega_r$}
+
+ \begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{../omega001.png}
+\caption{•}
+\label{fig:my_label}
+\end{figure}
+
+ \begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{../omega05.png}
+\caption{•}
+\label{fig:my_label}
+\end{figure}
+
+ \begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{../omega1.png}
+\caption{•}
+\label{fig:my_label}
+\end{figure}
+
+ \begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{../omega5.png}
+\caption{•}
+\label{fig:my_label}
+\end{figure}
+
+
+
+%\tableofcontents 
 
 % \section{\label{sec:level1}First-level heading}
 
