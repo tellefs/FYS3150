@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex Project2"] 1475505527 "Project2.aux" "Project2.bbl" "Project2" 1475507706
+["bibtex Project2"] 1475524813 "Project2.aux" "Project2.bbl" "Project2" 1475527326
   "/usr/local/texlive/2016/texmf-dist/bibtex/bst/revtex/apsrev4-1.bst" 1284166002 71518 fec93f06df0c073f83d2330456bd19c2 ""
-  "Project2.aux" 1475507706 1801 d6a51874ba8170516bf572d4613051ac ""
+  "Project2.aux" 1475527143 1854 febadbfad11e0f965dc313f3740d4cfb ""
   "Project2.bcf" 0 -1 0 ""
-  "Project2Notes.bib" 1475507706 328 76a7833d4026adb55bf18826f7566093 ""
+  "Project2Notes.bib" 1475527143 574 9aa1127ef18d7dcf0f15bba7e3926f27 ""
   (generated)
   "Project2.bbl"
   "Project2.blg"
-["pdflatex"] 1475507705 "Project2.tex" "Project2.pdf" "Project2" 1475507706
+["pdflatex"] 1475527142 "Project2.tex" "Project2.pdf" "Project2" 1475527326
   "/usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1246382020 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -71,6 +71,7 @@
   "/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb" 1248133631 36310 f5ddc6715cc60deb16d9db5ded6a9391 ""
+  "/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb" 1248133631 30068 eae4ba75635647d82fb0b7d7bccc4748 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb" 1248133631 39386 0bb525d495ceab21fe797301a586e0d7 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb" 1248133631 35309 940e81a5b9e04201a07e8b33a3ae6e64 ""
@@ -130,15 +131,15 @@
   "/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1472830391 1888048 f2c5faed5981a516f406b2ccc20bff71 ""
   "/usr/local/texlive/2016/texmf-var/web2c/pdftex/pdflatex.fmt" 1472830478 3873396 d9c89a65e3f644f392f943b7bb14d6e5 ""
   "/usr/local/texlive/2016/texmf.cnf" 1463979140 577 2938757e76f31531e65cc647e3507693 ""
-  "Project2.aux" 1475507706 1801 d6a51874ba8170516bf572d4613051ac ""
-  "Project2.bbl" 1475505527 2263 5b1e5be6d8258270b640a2b343cd5b43 "bibtex Project2"
-  "Project2.out" 1475507706 487 02f0a2d5a6a219182311e70f2162eb02 ""
-  "Project2.tex" 1475507705 17349 4423c4e97624cc5a7918633b43876c61 ""
+  "Project2.aux" 1475527143 1854 febadbfad11e0f965dc313f3740d4cfb ""
+  "Project2.bbl" 1475524813 2564 a489d7d0c0272c9eebd8b05d0cc532fb "bibtex Project2"
+  "Project2.out" 1475527143 487 02f0a2d5a6a219182311e70f2162eb02 ""
+  "Project2.tex" 1475527326 19839 4dfd4c976a87be48d7000ee068a3af0f ""
   (generated)
-  "Project2.pdf"
-  "Project2.log"
-  "Project2.out"
-  "Project2.aux"
   "Project2Notes.bib"
-  "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.pdf"
   "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.log"
+  "Project2.pdf"
+  "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.pdf"
+  "Project2.out"
+  "Project2.log"
+  "Project2.aux"

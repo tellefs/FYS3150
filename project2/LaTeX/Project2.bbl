@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{1}%
+\begin{thebibliography}{2}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -55,5 +55,11 @@
   \bibinfo {note} {All theory in this project adapted from FYS3150 Project 2
   (Fall 2016) $\protect \href
   {https://github.com/CompPhysics/ComputationalPhysics/tree/master/doc/Projects/2016/Project2}{<link>}$}\BibitemShut
+  {NoStop}%
+\bibitem [{Note2()}]{Note2}%
+  \BibitemOpen
+  \bibinfo {note} {See M.H. Jensen, Computational Physics: Lecture Notes Fall
+  2015, ch. 7.3, available at $\protect \href
+  {https://github.com/CompPhysics/ComputationalPhysics/blob/master/doc/Lectures/lectures2015.pdf}{<link2>}$}\BibitemShut
   {NoStop}%
 \end{thebibliography}%
