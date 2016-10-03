@@ -213,310 +213,55 @@ and we obtain a discrete set of values for $\rho$,
 Replacing the second order derivative by the 2nd order central difference we can write our equation as 
 
 \begin{equation}
-	-\frac{u_{i+1}+u_{i-1}-2u_{i}}{h^{2}} + \rho_{i}u_{i} = \lambda u_{i}
+	-\frac{u_{i+1}+u_{i-1}-2u_{i}}{h^{2}} + \rho_{i}^{2}u_{i} = \lambda u_{i}
 \end{equation}
 
-% \begin{equation}
-% 	u''(x) = f(x), \qquad x \in (0,1), \qquad u(0)=u(1)=0
-% \end{equation}
+Where $u_{i} = u(\rho_{i})$ is the discretized version of our function. We let $V_{i} = \rho_{i}^{2}$ and rewrite this as a matrix equation
 
-% We will be applying a method of discretizing the domain of $x$, and replacing the second order derivative with a 2nd order central numerical derivative. Using linear algebra methods we obtain various algorithms for finding the approximation to $u(x)$, $v_{i}(x_{i})$. \\
-% We will be applying three different algorithms, a general tridiagonal matrix solver, a special tridiagonal matrix solver and a LU decomposition. \\
-%  We will be comparing the various algorithms by finding analytically the number of floating point operations required to find $v(x)$, and timing it for $n = 10, 100, 1000$ grid points.\\
-% To estimate the numerical accuracy of our methods we find a $f(x)$ such that the equation has a closed form solution, and we will be comparing the approximate solution to the exact solution.
+\begin{equation}
+	\bm{Au} = \lambda\bm{u}
+\end{equation}
 
-% \section{\label{sec:Met}Theory and methods}
-
-% \subsection{\label{sec:Pro} The problem}
-% We will be solving the one-dimensional Poisson-equation with Dirichlet boundary conditions \footnote{All theory in this project adapted from FYS3150 Project 1 (Fall 2016) $\href{https://github.com/CompPhysics/ComputationalPhysics/tree/master/doc/Projects/2016/Project1}{<link>}$} \footnote{See also M.H. Jensen, Computational Physics: Lecture Notes Fall 2015, available at $\href{https://github.com/CompPhysics/ComputationalPhysics/blob/master/doc/Lectures/lectures2015.pdf}{<link2>}$}
-% . The problem can be stated as
-
-% \begin{equation}
-% 	u''(x) = f(x), \qquad x \in (0,1), \qquad u(0)=u(1)=0
-% \end{equation}
-% \\
-
-% We discretize $u(x)$ as $u_{i} = u(x_{i})$ with $x = ih$, \\$i = 0,1,2,...,n+1$. The step length is given as \\ $h = 1/(n+1)$. We define the approximation to $u_{i}$ as $v_{i}$, with $v_{0} = v_{n+1} = 0$, and approximate the second derivative of $u$ using the 2nd order central derivative
-
-% \begin{equation}
-% 	-\frac{v_{i+1} + v{i-1} - 2v_{i}}{h^{2}} = f_{i} \qquad \text{for } i = 1,2,...,n
-% \end{equation}
-
-% where $f_{i} = f(x_{i})$. This defines a set of $n$ linear equations which can be restated as
-
-% \begin{equation}
-% 	\bm{A}\bm{v} = \bm{\tilde{b}}
-% \end{equation}
-
-% where A is a tridiagonal matrix
-
-% \begin{equation}
-% A =
-% \begin{pmatrix}
-%   2 & -1 & 0 & \cdots & \cdots & 0 \\
-%   -1 & 2 &  -1 & 0 &\cdots & \cdots \\
-%   0 & -1 & 2 & -1 & 0 & \cdots \\
-%   \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-%   0 & \cdots & \cdots & -1 & 2 & -1 \\
-%   0 & \cdots & \cdots & \cdots & -1 & 2 
-% \end{pmatrix}
-% \end{equation}
-
-% and $\tilde{b_{i}} = -h^{2}f_{i}$. The job then is to solve the set of equations for $v_{i}$. In our case the source term will be $f(x) = 100e^{-10x}$, and the equation has an analytical solution $u(x) = 1 - (1-e^{-10})x - e^{-10x}$.
-
-% \subsection{\label{sec:Gen}General algorithm}
-% In the case of a general tridiagonal matrix we let $\bm{a}$ a vector of length $n$ and $\bm{b}$ and $\bm{c}$ vectors of length $n-1$. Our linear equation now reads
-
-% \begin{equation}
-% 	\bm{A}\bm{v} = \begin{pmatrix}
-%   a_{1} & b_{1} & 0 & \cdots & \cdots & 0 \\
-%   c_{1} & a_{2} &  b_{2} & 0 &\cdots & \cdots \\
-%   0 & c_{2} & a_{3} & b_{3} & 0 & \cdots \\
-%   \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-%   0 & \cdots & \cdots & c_{n-2} & a_{n-1} & b_{n-1} \\
-%   0 & \cdots & \cdots & \cdots & c_{n-1} & a_{n} 
-% \end{pmatrix}
-% \begin{pmatrix}
-% 	v_{1} \\
-% 	v_{2} \\
-% 	\vdots \\
-% 	\\
-% 	\vdots\\
-% 	v_{n}
-% \end{pmatrix} = 
-% \begin{pmatrix}
-% 	d_{1} \\
-% 	d_{2} \\
-% 	\vdots \\
-% 	\\
-% 	\vdots\\
-% 	d_{n}
-% \end{pmatrix}
-% \end{equation}
-
-% By applying Gaussian elimination we obtain a forward substitution
-
-% \begin{equation}
-% 	\bm{A}\bm{v} = \begin{pmatrix}
-%   \tilde{a_{1}} & b_{1} & 0 & \cdots & \cdots & 0 \\
-%   0 & \tilde{a_{2}} &  b_{2} & 0 &\cdots & \cdots \\
-%   0 & 0 & \tilde{a_{3}} & b_{3} & 0 & \cdots \\
-%   \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-%   0 & \cdots & \cdots & 0 & \tilde{a_{n-1}} & b_{n-1} \\
-%   0 & \cdots & \cdots & \cdots & 0 & a_{n} 
-% \end{pmatrix}
-% \begin{pmatrix}
-% 	v_{1} \\
-% 	v_{2} \\
-% 	\vdots \\
-% 	\\
-% 	\vdots\\
-% 	v_{n}
-% \end{pmatrix} = 
-% \begin{pmatrix}
-% 	\tilde{d_{1}} \\
-% 	\tilde{d_{2}} \\
-% 	\vdots \\
-% 	\\
-% 	\vdots\\
-% 	\tilde{d_{n}}
-% \end{pmatrix}
-% \end{equation}
-
-% where $\tilde{a_{1}} = a_{1}$ and 
-
-% \begin{equation}
-% \tilde{a_{i}} = a_{i} - b_{i-1}c_{i-1}/\tilde{a_{i-1}}, \qquad i=2,3,...,n 
-% \end{equation}
-
-% $\tilde{d_{1}} = d_{1}$ and 
-
-% \begin{equation}
-% \tilde{d_{i}} = d_{i} - \frac{c_{i-1}}{\tilde{a_{i-1}}}\tilde{d_{i-1}}, \qquad i=2,3,...,n
-% \end{equation}
-
-% By performing a backward substitution we obtain \\ $v_{n} = \tilde{d_{n}}/ \tilde{a_{n}}$ and
-
-% \begin{equation}
-% v_{i} = (\tilde{f_{i}} - b_{i}v_{i+1})/\tilde{a_{i}}, \qquad i=n-1,n-2,...,1
-% \end{equation}
-
-% To find $\tilde{a_{i}}$ and $\tilde{f_{i}}$ for all $n$ points we require \\$2*3*(n-1)$ floating point operations, and to find $u_{i}$ we require \\ $1 + 3*(n-1)$ floating point operations. \\ \\
-% In total to solve the system of equations we require \\ $(6+3)*(n-1) +1 = 9(n-1) +1$ floating point operations, or roughly $\mathcal{O}(9n)$ floating point operations.
+Since the endpoints are known we let $A$ be a matrix of dimension $(n-2)\cdot(n-2)$ and $u$ a vector of dimension (n-2).
 
 
-% \subsection{\label{sec:Spe}Special algorithm}
-% In our special case $a_{i} = 2$ and $b_{i} = c_{i} = -1$. We can now obtain an analytical expression for $\tilde{a_{i}}$
+\begin{widetext}
+\begin{equation}
+\bm{Au} =
+\begin{pmatrix}
+  \frac{2}{\hbar^{2}} + V_{1} & -\frac{1}{\hbar^{2}} & 0 & \cdots & \cdots & 0 \\
+  -\frac{1}{\hbar^{2}} & \frac{2}{\hbar^{2}} + V_{2} &  -\frac{1}{\hbar^{2}} & 0 &\cdots & \cdots \\
+  0 & -\frac{1}{\hbar^{2}} & \frac{2}{\hbar^{2}} + V_{3} & -\frac{1}{\hbar^{2}} & 0 & \cdots \\
+  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+  0 & \cdots & \cdots & -\frac{1}{\hbar^{2}} & \frac{2}{\hbar^{2}} + V_{N-3} & -\frac{1}{\hbar^{2}} \\
+  0 & \cdots & \cdots & \cdots & -\frac{1}{\hbar^{2}} & \frac{2}{\hbar^{2}} + V_{N-2}
+\end{pmatrix}
+\begin{pmatrix}
+	u_{1} \\
+	u_{2} \\
+	\vdots \\
+	\\
+	\\
+	u_{N-2}
+\end{pmatrix}
+=	\lambda
+\begin{pmatrix}
+	u_{1} \\
+	u_{2} \\
+	\vdots \\
+	\\
+	\\
+	u_{N-2}
+\end{pmatrix}
+\end{equation}
+\end{widetext}
 
-% \begin{equation}
-% 	\tilde{a_{i}} = -\frac{i}{i+1}
-% \end{equation}
+where $u_{0} = u_{N-1} = 0$.
 
-% and the equations for $\tilde{f_{i}}$ and $v_{i}$ reduce to
-
-% \begin{equation}
-% 	\tilde{{d_{i}}} = d_{i} - \frac{1}{a_{i-1}} \tilde{{d_{i-1}}}
-% \end{equation}
-
-% and
-
-% \begin{equation}
-% 	v_{i} = (\tilde{f_{i}} - v_{i+1})/\tilde{a_{i}}
-% \end{equation}
-
-% Since we can obtain $\tilde{a_{i}}$ analytically we don't count those floating point operations as part of our algorithm. The number of FLOPS necessary to solve the system is now $2*2*(n-1) + 1$ or roughly $\mathcal{O}(4n)$ flops.
-
-% \subsection{\label{sec:Err}Error}
-% To compare the numerical solution to the exact solution we examine the relative error
-
-% \begin{equation}
-% 	\epsilon_{i} = \log_{10}(|\frac{v_{i}-u_{i}}{u_{i}}|)
-% \end{equation}
-
-% We compute this as a function of step length $h$ (or alternatively of grid points $n$). We extract the max value and plot as a function of $h$, and this gives us the maximum error that the numerical algorithm produces. If coded correctly the general and special algorithm should yield the same results.
-
-% \subsection{\label{sec:Spe}LU decomposition}
-% Any non-singular matrix $A$ can be written as the product
-
-% \begin{equation}
-% 	A = LU
-% \end{equation}
-
-% where L is a lower triangular matrix
-
-% \begin{equation}
-% L =
-% \begin{pmatrix}
-%   l_{11} & 0 & 0 & \cdots & \cdots & 0 \\
-%   l_{21} & l_{22} &  0 & 0 &\cdots & \cdots \\
-%   l_{31} & l_{32} & l_{33} & 0 & 0 & \cdots \\
-%   \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-%   \cdots & \cdots & \cdots & \cdots & l_{n-1,n-1} & 0 \\
-%   0 & \cdots & \cdots & \cdots & l_{n,n-1} & l_{nn} 
-% \end{pmatrix}
-% \end{equation}
-
-% and $U$ is a upper triangular matrix (same pattern, I won't be bothered to write it out). Having obtained this decomposition we can solve our matrix equation
-
-% \begin{equation}
-% 	\bm{Av} = \bm{LUv} = \tilde{\bm{b}}
-% \end{equation}
-
-% This gives of two sets of linear equations to solve for $\bm{v}$:
-
-% \begin{equation}
-% 	\bm{Uv} = \bm{y}
-% \end{equation}
-
-% and
-
-% \begin{equation}
-% 	\bm{Ly} = \tilde{\bm{b}}
-% \end{equation}
-
-% Assuming we have already obtained the LU-decomposition, the number of FLOPS necessary to solve the linear equation is roughly $\mathcal{O}(\frac{2}{3}n^{3})$. For a $10^{5} \cdot 10^{5}$ matrix we would require $\frac{2}{3}\cdot10^{15}$ FLOPS. In addition, to hold a double $10^{5} \cdot 10^{5}$ matrix in memory we would require $8*10^{10}$ bytes of memory, or roughly 80 GB's of RAM. This far exceeds the capacity of a standard modern laptop.
-
-% \section{\label{sec:Res}Results and discussion}
-
-% \subsection{\label{sec:Gena}General algorithm}
-% I have ran the general algorithm for $n = 10, 100, 1000$. The results are plotted in figure 1. We can see that for only $n = 100$ the plots are indistinguishable, and therefore not a very precise way of determining numerical accuracy. However $n = 100$ seems sufficient for most intents and purposes. \\
-% We expect the algorithm to run like $\mathcal{O}(9n)$, which means we would expect $n=100$ to take 10 times longer than $n=10$. We observe however that $n=100$ takes twice as long, and $n=1000$ takes 9 times as long to run. When I run the algorithm for $n = 10 000$ I find $t = 2.6\cdot10^{-4}$, which is roughly ten times as long as $n = 1000$. The time results are tabled in table 1. \\
-% This suggests that there is some fixed time cost that you have to pay merely running the algorithm, which is of the same order as the time it takes to compute the results for small $n$. From $n = 1000$ the time it takes to run the algorithm is of a higher order than the fixed time cost, and we would thereafter expect the time cost to scale with $n$.
+\subsection{Coulomb Interaction}
+The single electron equation can be written as 
 
 
-% \begin{table}[h]
-% \centering
-% \caption{General algorithm computation time as function of $n$}
-% \label{my-label1}
-% \begin{tabular}{@{}lllll@{}}
-% \toprule
-% n        & 10     & 100  & 1000   & 10000  \\ \midrule
-% t{[}s{]} & 2.6e-4 & 6e-6 & 2.7e-5 & 2.6e-4 \\ \bottomrule
-% \end{tabular}
-% \end{table}
-
-% \subsection{\label{sec:Gena}General algorithm}
-% I have ran the special algorithm for $n = 10, 100, 1000, 10000$. The numerical results are in agreement with the general algorithm (as it should be!), and there is no need to plot the results. We expect the algorithm to run like $\mathcal{O}(4n)$. The time results are tabled in table 2. We would expect the special algorithm to run roughly $4/9 \approx 40\%$ faster. However, if we look past the assumed fixed time cost and compare for $n = 10 000$ we see that the special algorithm runs roughly $2.6/ 3.06 \approx 15\%$ faster than the general. The only difference between the two algorithms numerically is a few extra multiplications and divisions by 1, and it is  possible that an intelligent compiler would be quite quick at multiplying/dividing a number by 1. \footnote{I now recognize that I also timed the computation for $\tilde{a_{i}}$, which was left out of the floating point estimation. This may also explain some of the discrepancy, but I don't think there is much point in redoing it.}
-
-
-% \begin{table}[h]
-% \centering
-% \caption{Special algorithm computation time as function of n}
-% \label{my-label2}
-% \begin{tabular}{@{}lllll@{}}
-% \toprule
-% n        & 10   & 100    & 1000 & 10000   \\ \midrule
-% t{[}s{]} & 1e-6 & 1.2e-5 & 3e-5 & 3.06e-4 \\ \bottomrule
-% \end{tabular}
-% \end{table}
-
-
-% \begin{figure}[h]
-%   \begin{subfigure}{10cm}
-%     \centering\includegraphics[width=8cm]{../Python/general_alg_n10.png}
-%     %\caption{Caption text 1}
-%   \end{subfigure}
-%   \begin{subfigure}{10cm}
-%     \centering\includegraphics[width=8cm]{../Python/general_alg_n100.png}
-%     %\caption{Caption text 2}
-%   \end{subfigure}
- 
-%   \begin{subfigure}{10cm}
-%     \centering\includegraphics[width=8cm]{../Python/general_alg_n1000.png}
-%     %\caption{Caption text 3}
-%   \end{subfigure}
-%   \caption{Numerical vs. exact solution for the Poisson equation with n=10,100,1000}
-% \end{figure}
-
-% \begin{figure}[h]
-% \centering\includegraphics[width=10cm]{../Python/plt_eps.png}
-% \caption{Logarithmic plot of max error}
-% \end{figure}
-
-% \subsection{\label{sec:err}Error}
-% In table 3 I have tabled the maximum (logarithmic) error  $\epsilon_{max}$ of the special algorithm as a function of step length $h = 1/(n+1)$. In figure 2 I have plotted the results on a logarithmic scale. We find that the (logarithm of the) error scales approximately linearly with $\log10(h)$ until the number of points is approximately $ n = 10^{7}$. From there, the error from numerical round off would start to limit the possible numerical accuracy. If we required higher accuracy (irregardless of computation time) we would likely require more bits to be allocated for each number. However, for most purposes you would likely not require even $n = 10^{6}$, as there are often higher errors associated with for example a set of measurements you are dealing with.
-
-% \begin{table}[h]
-% \centering
-% \caption{Maximum error $\epsilon_{max}$ as function of n}
-% \label{my-label3}
-% \begin{tabular}{@{}llllllll@{}}
-% n                & 10      & 100     & 1000    & $10^{4}$ & $10^{5}$ & $10^{6}$ & $10^{7}$ \\
-% h                & 9.09e-2 & 9.90e-3 & 9.99e-4 & 9.99e-5  & 9.99e-6  & 9.99e-7  & 9.99e-8  \\
-% $\epsilon_{max}$ & -1.797  & -3.088 & -5.080 & -7.079  & -9.079  & -10.162 & -9.090    
-% \end{tabular}
-% \end{table}
-
-% \subsection{\label{sec:LU}LU decomposition}
-% I find that the LU decomposition algorithm produces the same maximum errors as the tridiagonal algorithm for $n = 10, 100, 1000$, so it is not necessary to include that in the results. In table 4 I have included the time as a function of the number of grid points $n$. We would expect the number of floating point operations (after we acquire the LU decomposition) in solving to scale roughly as $\mathcal{O}(\frac{2}{3}n^{3})$. Comparing $n = 1000$ to $n = 10000$ we find that it takes roughly 600 times longer if we increase $n$ 10 times. This is not quite 1000 times longer, so it is possible that an intelligent compiler is also in this case quickly performing a lot of division and multiplication by 1.\\
-% Also of note is that the time required for $n = 10 000$ was roughly a minute, and as stated in the theory section this method would be quite useless in this case for much larger $n$ (unless you apply some intelligent memory usage).
-% \\
-
-% \begin{table}[h]
-% \centering
-% \caption{LU decomposition computation time as function of $n$}
-% \label{my-label4}
-% \begin{tabular}{@{}lllll@{}}
-% \toprule
-% n        & 10     & 100    & 1000   & 10000 \\ \midrule
-% t{[}s{]} & 8.4e-5 & 1.3e-3 & 2.3e-1 & 1.4e2 \\ \bottomrule
-% \end{tabular}
-% \end{table}
-
-% \section{\label{sec:Con}Conclusion}
-% We have studied three different algorithms and found that they all produce roughly the same numerical errors. We find that the gain in numerical accuracy by decreasing step length $h$ is offset by roundoff error for a sufficiently large number of grid points (smaller step length) $n$. We also find that the different algorithms scale quite differently in computation time and memory usage, and we find that one should always be careful in specializing your method when you are dealing with a large number of data points. We also find that the mathematical differences in the algorithms can possibly be somewhat offset by an intelligent compiler, in the case of our matrix containing a large number of 1's. \\
-% I also hypothesize that there is some fixed cost in computation time irregardless of the number of float point operations, that reduces in relative importance as the number of grid points $n$ increases.
-
-% \section{\label{sec:App}Appendix}
-% All code used is available at: \href{https://github.com/aglgit/FYS3150}{link} \\
-% In this section I list the main parts of code used:
-
-% \begin{description}
-% \item [main.cpp] Main program used for running the various algorithms and writing to file the results.
-% \item [functions.cpp] As a test of header file functionality I moved some of the operations to the functions file and called upon them in the main file.
-% \item [plot.py] Program for plotting the text file output from main.cpp
-% \item [plot\textunderscore eps.py] Program for plotting the max error
-% \end{description}
 
 %\tableofcontents
 
