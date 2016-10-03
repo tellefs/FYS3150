@@ -259,7 +259,68 @@ Since the endpoints are known we let $A$ be a matrix of dimension $(n-2)\cdot(n-
 where $u_{0} = u_{N-1} = 0$.
 
 \subsection{Coulomb Interaction}
-The single electron equation can be written as 
+For two electrons with no Coulomb interaction in a harmonic oscillator potential the Schroedinger equation can be written as
+
+\begin{equation}
+	(\hbarm \frac{d^{2}}{dr_{1}^{2}} \hbarm \frac{d^{2}}{dr_{2}^{2}} + \onehalf k r_{1}{2} + k r_{2}^2)u(r_{1}, r_{2}) = Eu(r_{1}, r_{2})
+\end{equation}
+
+With no interaction the two-electron wavefunction $u(r_{1}, r_{2})$ can be written as a product of two single-electron wavefunction. Introducing the relative coordinate $\bm{r} = \bm{r_{1} - r_{2}}$ and the center of mass coordinate $\bm{R} = \onehalf (\bm{r_{1} + r_{2}})$ the radial equation becomes
+
+\begin{equation}
+	(-\frac{\hbar^{2}}{m}\frac{d^{2}}{dr^{2}} - \frac{\hbar^{2}}{4m} \frac{d^{2}}{dR{2}} + \frac{1}{4}kr^{2} + kR^{2}) u(r, R) = Eu(r, R)
+\end{equation}
+
+the solution can be separated as $u(r, R) = \psi(r)\phi(R)$ and the energy is a sum of the relative energy $E_{r}$ and center-of-mass energy $E_{R}$
+
+\begin{equation}
+	E = E_{r} + E_{R}
+\end{equation}
+
+adding the repulsive Coulomb interaction
+
+\begin{equation}
+	V(r_{1}, r_{2}) = \frac{\beta e^{2}}{\left| \bm{r_{1}-r_{2}} \right|} = \frac{\beta e^{2}}{r}
+\end{equation}
+
+where $\beta e^{2}  = 1.44$ eVnm. The relative motion Schroedinger equation becomes
+
+\begin{equation}
+	(-\frac{\hbar^{2}}{m}\frac{d^{2}}{dr^{2}} + \frac{1}{4}kr^{2} + \frac{\beta e^{2}}{r}) \psi(r) = E\psi(r)
+\end{equation}
+
+introducing $\rho = r/\alpha$, defining a new frequency
+
+\begin{equation}
+	\omega_{r}^{2} = \frac{1}{4} \frac{mk}{\hbar^{2}} \alpha^{4}
+\end{equation}
+
+fixing $\alpha$
+
+\begin{equation}
+	\alpha \frac{m \beta e^{2}}{\hbar^{2}} = 1
+\end{equation}
+
+and defining
+
+\begin{equation}
+	\lambda = \frac{m\alpha^{2}}{\hbar^{2}} E
+\end{equation}
+
+and we obtain Schroedinger's equation
+
+\begin{equation}
+	-\ddrhosq \psi(\rho) + \omega_{r}^{2}\rho^{2}\psi(\rho) + \frac{1}{\rho} = \lambda \psi(\rho)
+\end{equation}
+
+which using the methods described in the previous section can be solved numerically as an eigenvalue problem.
+
+\subsection{Jacobi's rotation method}
+For a real symmetric $n\cdot n$ matrix $\bm{A}$, we have $n$ eigenvalues $\lambda_{i}$ and there exists a real orthogonal matrix $\bm{S}$ such that
+
+\begin{equation}
+	\bm{S^{T}AS} = diag(\lambda_{1}, \lambda_{2},...,\lambda_{n})
+\end{equation}
 
 
 
