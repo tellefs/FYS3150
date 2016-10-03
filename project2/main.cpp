@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cmath>
 #include <iostream>
@@ -20,10 +21,10 @@ int main()
     double rho_min = 0;
     double rho_max = 5;
 
-    int N = 100;
+    int N = 200;
     double h = (rho_max - rho_min)/N;
     double e_i = -1./(h*h); //the off diagonal entries to the tri-diagonal matrix
-    double omega_r = 5.;
+    double omega_r = 1;
 
     vec V = zeros<vec>(N);
     vec rho = zeros<vec>(N);
@@ -56,7 +57,13 @@ int main()
 
 
 
+
+    clock_t start, finish; //to find the time the algorithm takes
+    start = clock();
     jacobiSolver(A, R, N);
+    finish = clock();
+    cout<<"time for our general method is "<<((double) (finish - start)/CLOCKS_PER_SEC)<<" sec."<<endl;
+
     test_eigenvectors(R, N);
     test_maxOffDiag();
     find_print_lowest_eigenvec_val(A, R, N);
@@ -78,9 +85,9 @@ void jacobiSolver(mat &A, mat &R, int N){
     int k, l;
     double max_off = maxOffDiag(A, N, k, l);
 
-
+    int counter = 0.;
     while(max_off > epsilon){
-
+        counter ++;
         double t,c,s;
 
         double tau = (A(l,l) - A(k,k))/(2*A(k,l));
@@ -134,6 +141,9 @@ void jacobiSolver(mat &A, mat &R, int N){
     eigvals = sort(eigvals);
 
     cout <<"Lowest eigenvalue is: "<< eigvals(0) << endl; //printing the lowest eigenvalue
+    cout << 3-eigvals(0)<<endl;
+    cout<<counter<<endl;
+
 }
 
 
