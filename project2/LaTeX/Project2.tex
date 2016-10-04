@@ -382,6 +382,8 @@ Convergence is guaranteed with the Jacobi method, however the number of floating
 \section{RESULTS AND DISCUSSION}
 
 \subsection{Programming precision}
+In the case of no electron interaction we know exactly the lowest 3 eigenvalues of the matrix $A$. To find the lowest eigenvalue $\lambda = 3$ we require roughly $N = 200$ mesh points to obtain an accuracy of 
+
 First we checked how many mesh points $N$ we needed. We ran the program for a system where we knew the lowest eigenvalue and wanted the difference to be less than $10^{-4}$. When doing this for a known problem where the lowest eigenvalue should have been $\lambda_{theory} = 3$ we found that we needed $N=200$ mesh points to get this presicion.\\
 
 \subsection{Comparison between different $\omega_r$}
