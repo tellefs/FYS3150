@@ -24,7 +24,7 @@ int main()
     int N = 200;
     double h = (rho_max - rho_min)/N;
     double e_i = -1./(h*h); //the off diagonal entries to the tri-diagonal matrix
-    double omega_r = 0.01;
+    double omega_r = 1.;
 
     vec V = zeros<vec>(N);
     vec rho = zeros<vec>(N);
