@@ -378,16 +378,24 @@ Numerically it is sufficient that the largest non-diagonal element is smaller th
 
 Convergence is guaranteed with the Jacobi method, however the number of floating point operations is quite large, $\mathcal{O}(12n^{3})$ operations in order to zero out non-diagonal elements.
 
-\subsection{Tests}
-
-We were to implement some unit-tests in to our program. In our progam we had a function to find the largest element of the diagonal, called $maxOffDiag$. In the test we sent in a $3x3$ matrix where we know the largest element of the diagonal, and checks of our function $maxOffDiag$ returns the right element.\\
-Our other test was to check of the eigenvector we got was orthogonal which they should be. Here we just computed the dot-product between all the resulting eigenvectors and checked of the value was lower than a decided tolerance. We set the tolerance to be $tol = 10^{-5}$.
+%<<<<<<< HEAD
+%\subsection{Tests}
+%
+%We were to implement some unit-tests in to our program. In our progam we had a function to find the largest element of the diagonal, called $maxOffDiag$. In the test we sent in a $3x3$ matrix where we know the largest element of the diagonal, and checks of our function $maxOffDiag$ returns the right element.\\
+%Our other test was to check of the eigenvector we got was orthogonal which they should be. Here we just computed the dot-product between all the resulting eigenvectors and checked of the value was lower than a decided tolerance. We set the tolerance to be $tol = 10^{-5}$.
+%=======
+\subsection{Unit testing}
+In order to test the accuracy of our methods we can introduce some simple unit tests. For example we could check that our implementation of Jacobi's method for a simple symmetric matrix with known eigenvalues produces the exact results. For our problem the 3 lowest eigenvalues are known in the case of no interaction, and it is easy to test for example if our algorithm produces the lowest eigenvalue to some precision. \\
+In addition, the solutions to the Schroedinger equation form an orthogonal basis. In the previous subsection I show that an orthogonal transformation preserves orthogonality, so we can test our algorithm by checking to see if the resulting eigenvectors are orthogonal.\\
+Finally, we test our function to find the maximum off-diagonal value of a matrix by testing it on a simple 3x3 symmetric matrix.
+%>>>>>>> 73d3c01504e8fb9524d03c3179d3c9bcaef5b424
 
 
 \section{RESULTS AND DISCUSSION}
 
 \subsection{Programming precision}
-In the case of no electron interaction we know exactly the lowest 3 eigenvalues of the matrix $A$. To find the lowest eigenvalue $\lambda = 3$ we require roughly $N = 200$ mesh points to obtain an accuracy of 
+% In the case of no electron interaction we know exactly the lowest 3 eigenvalues of the matrix $A$. To find the lowest eigenvalue $\lambda = 3$ we require roughly $N = 200$ mesh points to obtain an accuracy of $\left| \lambda - \lambda_{num} \right| \approx 0.0002$.
+
 
 First we checked how many mesh points $N$ we needed. We ran the program for a system where we knew the lowest eigenvalue and wanted the difference to be less than $10^{-4}$. When doing this for a known problem where the lowest eigenvalue should have been $\lambda_{theory} = 3$ we found that we needed $N=200$ mesh points to get this precision.\\
 We also checked how many similarity transformations we needed before all the non-diagonal elements were essentially zero. In the program we checked this by adding a counter which checked how many times we rotated matrix elements. We found that with $N= 200$ mesh points, we needed approximately $66600$ transformations. Our tolerance when doing this was that the diagonal elements had to be lower than $tol = 10^{-8}$.\\
@@ -408,9 +416,11 @@ Armadillo        & $0.02$                \\ \hline
 
 From Table (1) we can see that the method we have used for finding the eigenvalues is very inefficient compared to the method Armadillo is using. We have then used the armadillo-function $eig\_ sym(A)$ which also takes and symmetric matrix, just like we have assumed in our Jacobi-method. The difference is while we assume the whole matrix is filled with elements, $eig\_sym$ takes advantage of the fact that we have a sparse matrix (we have a tridiagonal matrix where the rest of the elements are zeros).
 
-\subsection{Comparison between different $\omega_r$}
+\subsection{Coulomb interaction}
 
-Now we will compare the lowest energies for the case where the electrons are interactig and when they are not interacting, for different values of $\omega_R$ (see figure (1), (2), (3), and (4)). We can see that for low values of $\omega_R$, interaction-case is pretty far from the non-interacting case compared to the higher values of $\omega_R$. 
+
+Now we will compare the lowest energies for the case where the electrons are interacting and when they are not interacting, for different values of $\omega_R$ (see figure (1), (2), (3), and (4)). We can see that for low values of $\omega_R$ the interacting case gives a wider wave-function (figure (1)). For higher $\omega_R$ the interacting and the non-interacting case gets closer (figure (2) and (3)), but when $\omega_R$ gets higher than $1$ they start to differ again. We can see that for $\omega_R = 5$ (figure (4)) the non-interacting case gets a narrower wave-function. This means that for higher $\omega_R$'s it will be easier to locate the electrons i.e. the probability to find them is higher. \\
+
 
  \begin{figure}[h]
 \centering

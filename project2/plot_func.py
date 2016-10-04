@@ -26,10 +26,11 @@ infile.close()
 x_axis = np.linspace(0, 20, n)
 mplt.plot(x_axis, interaction_omega001, label='interaction, $\Omega_R = 0.01$')
 mplt.plot(x_axis, non_interaction_omega001, label='non interaction, $\Omega_R = 0.01$')
-mplt.xlabel('relative coordinate $r$')
-mplt.ylabel('Wave func $\Psi$')
+mplt.xlabel('relative coordinate $r$', fontsize=18)
+mplt.ylabel('Wave func $\Psi$', fontsize=18)
 mplt.legend()
 mplt.show()
+
 
 
 
@@ -58,8 +59,8 @@ infile.close()
 x_axis = np.linspace(0, 10, n)
 mplt.plot(x_axis, interaction_omega05, label='interaction, $\Omega_R = 0.5$')
 mplt.plot(x_axis, non_interaction_omega05, label='non interaction, $\Omega_R = 0.5$')
-mplt.xlabel('relative coordinate $r$')
-mplt.ylabel('Wave func $\Psi$')
+mplt.xlabel('relative coordinate $r$', fontsize=18)
+mplt.ylabel('Wave func $\Psi$', fontsize=18)
 mplt.legend()
 mplt.show()
 
@@ -91,10 +92,11 @@ infile.close()
 x_axis = np.linspace(0, 5, n)
 mplt.plot(x_axis, interaction_omega1, label='interaction, $\Omega_R = 1$')
 mplt.plot(x_axis, non_interaction_omega1, label='non interaction, $\Omega_R = 1$')
-mplt.xlabel('relative coordinate $r$')
-mplt.ylabel('Wave func $\Psi$')
+mplt.xlabel('relative coordinate $r$', fontsize=18)
+mplt.ylabel('Wave func $\Psi$', fontsize=18)
 mplt.legend()
 mplt.show()
+
 
 
 
@@ -122,8 +124,9 @@ infile.close()
 x_axis = np.linspace(0, 5, n)
 mplt.plot(x_axis, interaction_omega5, label='interaction, $\Omega_R = 5$')
 mplt.plot(x_axis, non_interaction_omega5, label='non interaction, $\Omega_R = 5$')
-mplt.xlabel('relative coordinate $r$')
-mplt.ylabel('Wave func $\Psi$')
+mplt.xlabel('relative coordinate $r$', fontsize=18)
+mplt.ylabel('Wave func $\Psi$', fontsize=18)
 mplt.legend()
 mplt.show()
+
 
