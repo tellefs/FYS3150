@@ -266,13 +266,12 @@ The single electron equation can be written as
 
 \subsection{Programming precision}
 First we checked how many mesh points $N$ we needed. We ran the program for a system where we knew the lowest eigenvalue and wanted the difference to be less than $10^{-4}$. When doing this for a known problem where the lowest eigenvalue should have been $\lambda_{theory} = 3$ we found that we needed $N=200$ mesh points to get this presicion.\\
-Now that we found our right mesh point precision, we timed our algorith and compared it to the $c++$ library, Armadillo.
 
 \subsection{Comparison between different $\omega_r$}
 
  \begin{figure}[H]
 \centering
-\includegraphics[width=0.5\textwidth]{../omega001.png}
+\includegraphics[width=0.5\textwidth]{../omega1.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
