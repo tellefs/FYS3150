@@ -384,8 +384,24 @@ Convergence is guaranteed with the Jacobi method, however the number of floating
 \subsection{Programming precision}
 In the case of no electron interaction we know exactly the lowest 3 eigenvalues of the matrix $A$. To find the lowest eigenvalue $\lambda = 3$ we require roughly $N = 200$ mesh points to obtain an accuracy of 
 
-First we checked how many mesh points $N$ we needed. We ran the program for a system where we knew the lowest eigenvalue and wanted the difference to be less than $10^{-4}$. When doing this for a known problem where the lowest eigenvalue should have been $\lambda_{theory} = 3$ we found that we needed $N=200$ mesh points to get this presicion.\\
-Now that we found our right mesh point precision, we timed our algorith and compared it to the $c++$ library, Armadillo.
+First we checked how many mesh points $N$ we needed. We ran the program for a system where we knew the lowest eigenvalue and wanted the difference to be less than $10^{-4}$. When doing this for a known problem where the lowest eigenvalue should have been $\lambda_{theory} = 3$ we found that we needed $N=200$ mesh points to get this precision.\\
+We also checked how many similarity transformations we needed before all the non-diagonal elements were essentially zero. In the program we checked this by adding a counter which checked how many times we rotated matrix elements. We found that with $N= 200$ mesh points, we needed approximately $66600$ transformations. Our tolerance when doing this was that the diagonal elements had to be lower than $tol = 10^{-8}$.\\
+
+Now that we found our right mesh point precision, we timed our algorithm and compared it to the $c++$ library Armadillo. In Table (1) the times are included.
+
+\begin{table}[h]
+\centering
+\caption{Time comparison}
+\label{my-label}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Method}  & \textbf{Time {[}s{]}} \\ \hline
+Jacobi algorithm & $13.73$               \\ \hline
+Armadillo        & $0.02$                \\ \hline
+\end{tabular}
+\end{table}
+
+From Table (1) we can see that the method we have used for finding the eigenvalues is very inefficient compared to the method Armadillo is using. We have then used the armadillo-function $eig\_ sym(A)$ which also takes and symmetric matrix, just like we have assumed in our Jacobi-method. The difference is while we assume the whole matrix is filled with elements, $eig\_sym$ takes advantage of the fact that we have a sparse matrix (we have a tridiagonal matrix where the rest of the elements are zeros).
 
 \subsection{Comparison between different $\omega_r$}
 
@@ -416,6 +432,10 @@ Now that we found our right mesh point precision, we timed our algorith and comp
 \caption{•}
 \label{fig:my_label}
 \end{figure}
+
+\subsection{Tests}
+
+We were to implement some unit-tests in to our program.
 
 
 
