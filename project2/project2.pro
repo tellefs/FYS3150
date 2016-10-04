@@ -10,3 +10,8 @@ SOURCES += \
 HEADERS +=
 
 LIBS += -llapack -lblas -larmadillo
+
+macx: LIBS += -L$$PWD/../../../../../../../usr/local/Cellar/armadillo/7.400.2/lib/ -larmadillo.7.40.2
+
+INCLUDEPATH += $$PWD/../../../../../../../usr/local/Cellar/armadillo/7.400.2/include
+DEPENDPATH += $$PWD/../../../../../../../usr/local/Cellar/armadillo/7.400.2/include

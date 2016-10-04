@@ -259,7 +259,124 @@ Since the endpoints are known we let $A$ be a matrix of dimension $(n-2)\cdot(n-
 where $u_{0} = u_{N-1} = 0$.
 
 \subsection{Coulomb Interaction}
-The single electron equation can be written as 
+For two electrons with no Coulomb interaction in a harmonic oscillator potential the Schroedinger equation can be written as
+
+\begin{equation}
+	(\hbarm \frac{d^{2}}{dr_{1}^{2}} \hbarm \frac{d^{2}}{dr_{2}^{2}} + \onehalf k r_{1}{2} + k r_{2}^2)u(r_{1}, r_{2}) = Eu(r_{1}, r_{2})
+\end{equation}
+
+With no interaction the two-electron wavefunction $u(r_{1}, r_{2})$ can be written as a product of two single-electron wavefunction. Introducing the relative coordinate $\bm{r} = \bm{r_{1} - r_{2}}$ and the center of mass coordinate $\bm{R} = \onehalf (\bm{r_{1} + r_{2}})$ the radial equation becomes
+
+\begin{equation}
+	(-\frac{\hbar^{2}}{m}\frac{d^{2}}{dr^{2}} - \frac{\hbar^{2}}{4m} \frac{d^{2}}{dR{2}} + \frac{1}{4}kr^{2} + kR^{2}) u(r, R) = Eu(r, R)
+\end{equation}
+
+the solution can be separated as $u(r, R) = \psi(r)\phi(R)$ and the energy is a sum of the relative energy $E_{r}$ and center-of-mass energy $E_{R}$
+
+\begin{equation}
+	E = E_{r} + E_{R}
+\end{equation}
+
+adding the repulsive Coulomb interaction
+
+\begin{equation}
+	V(r_{1}, r_{2}) = \frac{\beta e^{2}}{\left| \bm{r_{1}-r_{2}} \right|} = \frac{\beta e^{2}}{r}
+\end{equation}
+
+where $\beta e^{2}  = 1.44$ eVnm. The relative motion Schroedinger equation becomes
+
+\begin{equation}
+	(-\frac{\hbar^{2}}{m}\frac{d^{2}}{dr^{2}} + \frac{1}{4}kr^{2} + \frac{\beta e^{2}}{r}) \psi(r) = E\psi(r)
+\end{equation}
+
+introducing $\rho = r/\alpha$, defining a new frequency
+
+\begin{equation}
+	\omega_{r}^{2} = \frac{1}{4} \frac{mk}{\hbar^{2}} \alpha^{4}
+\end{equation}
+
+fixing $\alpha$
+
+\begin{equation}
+	\alpha \frac{m \beta e^{2}}{\hbar^{2}} = 1
+\end{equation}
+
+and defining
+
+\begin{equation}
+	\lambda = \frac{m\alpha^{2}}{\hbar^{2}} E
+\end{equation}
+
+and we obtain Schroedinger's equation
+
+\begin{equation}
+	-\ddrhosq \psi(\rho) + \omega_{r}^{2}\rho^{2}\psi(\rho) + \frac{1}{\rho} = \lambda \psi(\rho)
+\end{equation}
+
+which using the methods described in the previous section can be solved numerically as an eigenvalue problem.
+
+\subsection{Jacobi's rotation method}
+For a real symmetric $n\cdot n$ matrix $\bm{A}$, we have $n$ eigenvalues $\lambda_{i}$ and there exists a real orthogonal matrix $\bm{S}$ such that 
+\footnote{See M.H. Jensen, Computational Physics: Lecture Notes Fall 2015, ch. 7.3, available at $\href{https://github.com/CompPhysics/ComputationalPhysics/blob/master/doc/Lectures/lectures2015.pdf}{<link2>}$}
+
+\begin{equation}
+	\bm{S^{T}AS} = diag(\lambda_{1}, \lambda_{2},...,\lambda_{n})
+\end{equation}
+
+In general a similarity transform
+
+\begin{equation}
+	\bm{B = S^{T}AS} \qquad \qquad \bm{S^{T}S = I}
+\end{equation}
+
+will have the same eigenvalues as $\bm{A}$, but different eigenvectors. If we have an orthogonal basis $v_{i}$ such that
+
+\begin{equation}
+	\bm{v_{j}^{T}v_{i} = \delta_{ij}}
+\end{equation}
+
+a unitary transformation $\bm{U^{T}U = I}$ will preserve the orthogonality of the basis vectors, such that if $w_{i} = Uv_{i}$
+
+\begin{equation}
+	\bm{w_{j}^{T}w_{i} = (Uv_{j})^{T}(Uv_{i}) = v_{j}^{T}U^{T}Uv_{i} = \delta_{ij}}
+\end{equation}
+
+The idea of Jacobi's method is to perform a series of similarity transformations such that we receive a diagonal matrix $\bm{D}$ with the eigenvalues of $\bm{A}$ on the diagonal. \\ \\
+Consider a $N\times N$ matrix
+
+\begin{equation}
+S = 
+	\begin{pmatrix}
+		1 & 0 & \cdots & 0 & 0 \cdots & 0 & 0 \\
+		0 & 1 & \cdots & 0 & 0 \cdots & 0 & 0 \\
+		\cdots & \cdots & \cdots & \cdots & \cdots & 0 & \cdots \\
+		0 & 0 & \cdots & \cos(\theta) & 0 \cdots & 0 & \sin(\theta) \\
+		0 & 0 & \cdots & 0 & 1 \cdots & 0 & 0 \\
+		\cdots & \cdots & \cdots & \cdots & \cdots & 0 & \cdots \\
+		0 & 0 & \cdots & 0 & 0 \cdots & 1& 0 \\
+		0 & 0 & \cdots & -\sin(\theta) & 0 \cdots & 0 & \cos(\theta) \\	
+	\end{pmatrix}
+\end{equation}
+
+with $\bm{S^{T} = S^{-1}}$. It performs a plane rotation around an angle $\theta$ in $n$-dimensional space. We apply a similarity transformation $\bm{S^{T}AS}$ to our matrix $\bm{A}$ such that the largest non-diagonal elements $a_{kl} = a_{lk}$ become zero. For a real symmetric matrix we thus reduce the norm of the offdiagonal elements
+
+\begin{equation}
+	\text{off}(\bm{A}) = \sqrt{\sum_{i=1}^{n}\sum_{j=1, j\neq i}^{n}} a_{ij}^{2}
+\end{equation}
+
+and after a sufficient number of iterations we are guaranteed a matrix
+
+\begin{equation}
+	\bm{S_{N}^{T}S_{N-1}^{T}....S_{1}^{T}AS_{1}....S_{N-1}S_{N} = diag(\lambda_{1},...,\lambda_{N})}
+\end{equation}
+
+Numerically it is sufficient that the largest non-diagonal element is smaller than some tolerance $\epsilon$
+
+\begin{equation}
+	max(a_{ij}^{2}) \leq \epsilon
+\end{equation}
+
+Convergence is guaranteed with the Jacobi method, however the number of floating point operations is quite large, $\mathcal{O}(12n^{3})$ operations in order to zero out non-diagonal elements.
 
 
 \section{RESULTS AND DISCUSSION}
@@ -270,28 +387,28 @@ Now that we found our right mesh point precision, we timed our algorith and comp
 
 \subsection{Comparison between different $\omega_r$}
 
- \begin{figure}[H]
+ \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega001.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
 
- \begin{figure}[H]
+ \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega05.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
 
- \begin{figure}[H]
+ \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega1.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
 
- \begin{figure}[H]
+ \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega5.png}
 \caption{•}
@@ -300,7 +417,7 @@ Now that we found our right mesh point precision, we timed our algorith and comp
 
 
 
-%\tableofcontents
+%\tableofcontents 
 
 % \section{\label{sec:level1}First-level heading}
 
