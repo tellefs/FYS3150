@@ -378,6 +378,11 @@ Numerically it is sufficient that the largest non-diagonal element is smaller th
 
 Convergence is guaranteed with the Jacobi method, however the number of floating point operations is quite large, $\mathcal{O}(12n^{3})$ operations in order to zero out non-diagonal elements.
 
+\subsection{Tests}
+
+We were to implement some unit-tests in to our program. In our progam we had a function to find the largest element of the diagonal, called $maxOffDiag$. In the test we sent in a $3x3$ matrix where we know the largest element of the diagonal, and checks of our function $maxOffDiag$ returns the right element.\\
+Our other test was to check of the eigenvector we got was orthogonal which they should be. Here we just computed the dot-product between all the resulting eigenvectors and checked of the value was lower than a decided tolerance. We set the tolerance to be $tol = 10^{-5}$.
+
 
 \section{RESULTS AND DISCUSSION}
 
@@ -404,6 +409,8 @@ Armadillo        & $0.02$                \\ \hline
 From Table (1) we can see that the method we have used for finding the eigenvalues is very inefficient compared to the method Armadillo is using. We have then used the armadillo-function $eig\_ sym(A)$ which also takes and symmetric matrix, just like we have assumed in our Jacobi-method. The difference is while we assume the whole matrix is filled with elements, $eig\_sym$ takes advantage of the fact that we have a sparse matrix (we have a tridiagonal matrix where the rest of the elements are zeros).
 
 \subsection{Comparison between different $\omega_r$}
+
+Now we will compare the lowest energies for the case where the electrons are interactig and when they are not interacting, for different values of $\omega_R$ (see figure (1), (2), (3), and (4)). We can see that for low values of $\omega_R$, interaction-case is pretty far from the non-interacting case compared to the higher values of $\omega_R$. 
 
  \begin{figure}[h]
 \centering
@@ -433,9 +440,6 @@ From Table (1) we can see that the method we have used for finding the eigenvalu
 \label{fig:my_label}
 \end{figure}
 
-\subsection{Tests}
-
-We were to implement some unit-tests in to our program.
 
 
 
