@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex Project2"] 1475527593 "Project2.aux" "Project2.bbl" "Project2" 1475579147
+["bibtex Project2"] 1475580686 "Project2.aux" "Project2.bbl" "Project2" 1475581011
   "/usr/local/texlive/2016/texmf-dist/bibtex/bst/revtex/apsrev4-1.bst" 1284166002 71518 fec93f06df0c073f83d2330456bd19c2 ""
-  "Project2.aux" 1475579147 2918 d3a70b43f3d61346fc7fab0911bb7507 ""
+  "Project2.aux" 1475580687 2918 bb7f429380b4fac2293995b21b14c13e ""
   "Project2.bcf" 0 -1 0 ""
-  "Project2Notes.bib" 1475579147 574 9aa1127ef18d7dcf0f15bba7e3926f27 ""
+  "Project2Notes.bib" 1475580687 574 9aa1127ef18d7dcf0f15bba7e3926f27 ""
   (generated)
-  "Project2.blg"
   "Project2.bbl"
-["pdflatex"] 1475579146 "Project2.tex" "Project2.pdf" "Project2" 1475579147
+  "Project2.blg"
+["pdflatex"] 1475580686 "Project2.tex" "Project2.pdf" "Project2" 1475581011
   "../omega001.png" 1475490771 44523 0a83ccd145297357ea2f5e9c3250ad2c ""
   "../omega05.png" 1475490771 42989 75f6bd1eaf866ac9f4bc6b6cb3c47548 ""
   "../omega1.png" 1475490771 44028 6abf8910ab5d620c9de290e676f21d03 ""
@@ -136,15 +136,15 @@
   "/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1472830391 1888048 f2c5faed5981a516f406b2ccc20bff71 ""
   "/usr/local/texlive/2016/texmf-var/web2c/pdftex/pdflatex.fmt" 1472830478 3873396 d9c89a65e3f644f392f943b7bb14d6e5 ""
   "/usr/local/texlive/2016/texmf.cnf" 1463979140 577 2938757e76f31531e65cc647e3507693 ""
-  "Project2.aux" 1475579147 2918 d3a70b43f3d61346fc7fab0911bb7507 ""
-  "Project2.bbl" 1475527593 2564 a489d7d0c0272c9eebd8b05d0cc532fb "bibtex Project2"
-  "Project2.out" 1475579147 702 7a86cd559f3035cdc26ae73e6fac99e0 ""
-  "Project2.tex" 1475535339 20843 76096e1827472e334324d743fb5e4f47 ""
+  "Project2.aux" 1475580687 2918 bb7f429380b4fac2293995b21b14c13e ""
+  "Project2.bbl" 1475580686 2564 a489d7d0c0272c9eebd8b05d0cc532fb "bibtex Project2"
+  "Project2.out" 1475580687 702 7a86cd559f3035cdc26ae73e6fac99e0 ""
+  "Project2.tex" 1475581011 21054 33df1500e1ed4819eef2bc9fc1db7a7b ""
   (generated)
-  "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.log"
-  "Project2.log"
-  "Project2Notes.bib"
   "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.pdf"
-  "Project2.aux"
   "Project2.out"
+  "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.log"
+  "Project2.aux"
+  "Project2Notes.bib"
+  "Project2.log"
   "Project2.pdf"
