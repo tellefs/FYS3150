@@ -21,7 +21,7 @@ int main()
     double rho_min = 0;
     double rho_max = 5;
 
-    int N = 20;
+    int N = 200;
     double h = (rho_max - rho_min)/N;
     double e_i = -1./(h*h); //the off diagonal entries to the tri-diagonal matrix
     double omega_r = 1.;
@@ -74,8 +74,33 @@ int main()
     eigvals = sort(eigvals);
 
     cout <<"Lowest eigenvalue is: "<< eigvals(0) << endl; //printing the lowest eigenvalue
-    cout << 3-eigvals(0)<<endl;
+    cout <<"Diff: " << 3-eigvals(0)<<endl;
 
+    // test eigsys
+    mat A_arma = zeros<mat>(N,N);
+    mat R_arma = zeros<mat>(N,N);
+    for(int i=0; i<N; i++){
+        for(int j=0; j<N; j++){
+            if (i==j){
+                A_arma(i,j) = d(i);
+                R_arma(i,j) = 1.0;
+            }
+            if(i==j-1){
+                A_arma(i,j) = e_i;
+            } else if (i==j+1) {
+                A_arma(i,j) = e_i;
+            }
+        }
+    }
+
+    vec eigval;
+    mat eigvec;
+
+    clock_t start1, finish1;
+    start1 = clock();
+    eig_sym(eigval, eigvec, A_arma);
+    finish1 = clock();
+    cout<<"time for armadillo method is "<<((double) (finish1 - start1)/CLOCKS_PER_SEC)<<" sec."<<endl;
 
     test_eigenvectors(R, N);
     test_maxOffDiag();
@@ -158,30 +183,6 @@ void jacobiSolver(mat &A, mat &R, int N){
 //    cout<<counter<<endl;
     cout<<"no_iterations: " << counter<<endl;
 }
-
-
-void test_maxOffDiag(){
-    mat X = eye<mat>(3,3);
-//    double s = 0;
-//    for(int i=0; i<3; i++){
-//        for(int j=0; j<3; j++){
-//            X(i,j) = s+1;
-//            s++;
-
-//        }
-//    }
-    X(0,1) = 2; X(1,0) = 2;
-    X(1,2) = 3; X(2,1) = 3;
-    int k,l;
-    double maxVal = maxOffDiag(X, 3, k, l);
-    if((maxVal != 3) or (k!=2) or (l!=1)){
-        cout<<"error in maxOffDiag:"<<endl;
-        cout << "maxVal = " << maxVal << endl;
-        cout << "k = " << k << endl;
-        cout << "l = " << l << endl;
-    }
-}
-
 
 
 //function to find the maximum value off the diagonal of the matrix
@@ -271,6 +272,29 @@ void test_eigenvectors(mat X, int n){
     }
 }
 
+
+
+void test_maxOffDiag(){
+    mat X = eye<mat>(3,3);
+//    double s = 0;
+//    for(int i=0; i<3; i++){
+//        for(int j=0; j<3; j++){
+//            X(i,j) = s+1;
+//            s++;
+
+//        }
+//    }
+    X(0,1) = 2; X(1,0) = 2;
+    X(1,2) = 3; X(2,1) = 3;
+    int k,l;
+    double maxVal = maxOffDiag(X, 3, k, l);
+    if((maxVal != 3) or (k!=2) or (l!=1)){
+        cout<<"error in maxOffDiag:"<<endl;
+        cout << "maxVal = " << maxVal << endl;
+        cout << "k = " << k << endl;
+        cout << "l = " << l << endl;
+    }
+}
 
 void find_print_lowest_eigenvec_val(mat &X, mat &Y, int N){
 
