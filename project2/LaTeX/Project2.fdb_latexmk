@@ -1,5 +1,5 @@
 # Fdb version 3
-["bibtex Project2"] 1475587844 "Project2.aux" "Project2.bbl" "Project2" 1475587845
+["bibtex Project2"] 1475587844 "Project2.aux" "Project2.bbl" "Project2" 1475587958
   "/usr/local/texlive/2016/texmf-dist/bibtex/bst/revtex/apsrev4-1.bst" 1284166002 71518 fec93f06df0c073f83d2330456bd19c2 ""
   "Project2.aux" 1475587845 3258 a29bf7d2b758503d4cfb36714e2d0528 ""
   "Project2.bcf" 0 -1 0 ""
@@ -7,7 +7,7 @@
   (generated)
   "Project2.bbl"
   "Project2.blg"
-["pdflatex"] 1475587844 "Project2.tex" "Project2.pdf" "Project2" 1475587845
+["pdflatex"] 1475587844 "Project2.tex" "Project2.pdf" "Project2" 1475587958
   "../omega001.png" 1475490771 44523 0a83ccd145297357ea2f5e9c3250ad2c ""
   "../omega05.png" 1475490771 42989 75f6bd1eaf866ac9f4bc6b6cb3c47548 ""
   "../omega1.png" 1475490771 44028 6abf8910ab5d620c9de290e676f21d03 ""
@@ -141,9 +141,9 @@
   "Project2.tex" 1475587840 23390 f54cee6b741a1b1e099a8eb391d86535 ""
   (generated)
   "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.pdf"
-  "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.log"
   "Project2.log"
+  "/Users/andreaslefdalsnes/Documents/Programming/FYS3150/Project2/LaTeX/Project2.log"
+  "Project2.aux"
+  "Project2.pdf"
   "Project2Notes.bib"
   "Project2.out"
-  "Project2.pdf"
-  "Project2.aux"
