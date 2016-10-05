@@ -1,6 +1,6 @@
 % Using template APS for projects
 % Commented out non-useful code
-% Skyter spurv med kanon
+% Skyter spurv med kanon (stakkars..)
 
 % ****** Start of file apssamp.tex ******
 %
@@ -120,7 +120,14 @@
              %  but any date may be explicitly specified
 
 \begin{abstract}
-In this project we solve the Schrodinger equation for two electrons in a 3D harmonic oscillator potential. We solve with and without electron repulsion, and compare the results. To accomplish this we apply a general method of discretizing the domain and reducing the problem to an eigenvalue equation. We thereafter apply Jacobi's rotation algorithm to obtain the eigenvalues of the matrix. We also apply the principles of unit testing by testing the algorithm for some simple problems with known solutions.
+
+In this project we solve the Schrödinger equation for two electrons in a 3D harmonic oscillator potential. We solve with and without electron repulsion, and compare the results. When comparing these results we saw that the factor $\omega_R$, which reflected the strength of the oscillator potential, made the wave function for the interacting and the non-interacting case differ more than the Coulomb-potential which were added to simulate the electron repulsion. \\ 
+To accomplish this we apply a general method of discretizing the domain and reducing the problem to an eigenvalue equation. We thereafter apply Jacobi's rotation algorithm to obtain the eigenvalues of the matrix. This way of solving the eigenvalue-problem works in our case, but it is not as effective as using the Armadillo-library functions. We also apply the principles of unit testing by testing the algorithm for some simple problems with known solutions.\\\\
+All code for this project can be retrieved at this git-hub address :
+
+\begin{verbatim}
+https://github.com/tellefs/FYS3150/tree/master/project2
+\end{verbatim}
 
 % % An article usually includes an abstract, a concise summary of the work
 % % covered at length in the main body of the article. 
@@ -143,7 +150,7 @@ In this project we solve the Schrodinger equation for two electrons in a 3D harm
 \maketitle
 
 \section{\label{sec:Int}Introduction}
-In this project we aim to solve the Schrodinger equation for two electrons in a 3D harmonic oscillator potential. We will be solving with and without the repulsive Coulomb potential, and comparing the results. For the case of no repulsion we have an analytical expression for the energies, and this will be useful in determining the accuracy of our results. Assume spherical symmetry.
+In this project we aim to solve the Schrödinger equation for two electrons in a 3D harmonic oscillator potential. We will be solving with and without the repulsive Coulomb potential, and comparing the results. For the case of no repulsion we have an analytical expression for the energies, and this will be useful in determining the accuracy of our results. Assume spherical symmetry.
 
 \section{\label{sec:The}Theory and methods}
 
@@ -172,7 +179,7 @@ We introduce a dimensionless variable $\rho = (1/ \alpha)r$ where alpha is a con
 	-\frac{\hbar^{2}}{2m\alpha^{2}} \ddrhosq u(\rho) + (V(\rho) + \frac{l(l+1)}{\rho^{2}}\frac{\hbar^{2}}{2m\alpha^{2}})u(\rho) = E u(\rho)
 \end{equation}
 
-In this project we will be interested in the case $l = 0$. Now since we are working in spherical coordinates, $r \in [0, \infty)$. Since we require $R(r)$ to go to zero at the boundaries, when we make the substituion $R(r) = (1/r)u(r) = (1/r)u(\alpha \rho)$ we obtain the boundary conditions for $u(\rho)$: $u(0) = u(\infty) = 0$.
+In this project we will be interested in the case $l = 0$. Now since we are working in spherical coordinates, $r \in [0, \infty)$. Since we require $R(r)$ to go to zero at the boundaries, when we make the substitution $R(r) = (1/r)u(r) = (1/r)u(\alpha \rho)$ we obtain the boundary conditions for $u(\rho)$: $u(0) = u(\infty) = 0$.
 \\ \\
 We insert $V(\rho) = \onehalf k\alpha^{2}\rho^{2}$ and obtain
 
@@ -419,36 +426,44 @@ From Table (1) we can see that the method we have used for finding the eigenvalu
 \subsection{Coulomb interaction}
 In this project we were interested in the ground state energies. In the program, this would mean the eigenvector that corresponds to the lowest eigenvalue. Since we were only interested in the lowest state, and not the second-lowest etc. this was pretty straight forward.\\
 
-Now we will compare the ground-statre energies for the case where the electrons are interacting and when they are not interacting, for different values of $\omega_R$ (see figure (1), (2), (3), and (4)). We can see that for low values of $\omega_R$ the interacting case gives a wider wave-function (figure (1)). For higher $\omega_R$ the interacting and the non-interacting case gets closer (figure (2) and (3)), but when $\omega_R$ gets higher than $1$ they start to differ again. We can see that for $\omega_R = 5$ (figure (4)) the non-interacting case gets a narrower wave-function. This means that for higher $\omega_R$'s it will be easier to locate the electrons i.e. the probability to find them is higher. \\
-These results means that the $\omega_R$ factor has more to say than the Coulomb-interaction $\frac{1}{\rho}$ (see Equation (22)) when changing the $\omega_R$ factor. We can see this from Figure (3) where $\oemga_R = 1$. This is the case where the wave-functions are most similar compared to the other plots (figure (1), (2), and (4)).
+Now we will compare the ground-state energies for the case where the electrons are interacting and when they are not interacting, for different values of $\omega_R$ (see figure (1), (2), (3), and (4)). We can see that for low values of $\omega_R$ the interacting case gives a wider wave-function (figure (1)). For higher $\omega_R$ the interacting and the non-interacting case gets closer (figure (2) and (3)), but when $\omega_R$ gets higher than $1$ they start to differ again. We can see that for $\omega_R = 5$ (figure (4)) the non-interacting case gets a narrower wave-function. This means that for higher $\omega_R$'s it will be easier to locate the electrons i.e. the probability to find them is higher.\\
+These results means that the $\omega_R$ factor changes the wave function more than the Coulomb-interaction $\frac{1}{\rho}$ (see Equation (22)) in our case. We can see this from Figure (3) where $\omega_R = 1$. This is the case where the wave-functions are most similar compared to the other plots (figure (1), (2), and (4)).\\ It must be said that we do not change the strength of the Coulomb interaction in this problem, and this might have had something to say when comparing these plots.
 
- \begin{figure}[h]
+ \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega001.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
 
- \begin{figure}[h]
+ \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega05.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
 
- \begin{figure}[h]
+ \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega1.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
 
- \begin{figure}[h]
+ \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{../omega5.png}
 \caption{•}
 \label{fig:my_label}
 \end{figure}
+
+\section{CONCLUSION}
+
+In this project we implemented the Jacobi-algorithm to solve our eigenvalue problem. We saw that this might not have been the most effective way to solve this, but it worked for our purpose. \\
+We saw that the Coulomb-potential added a small change in the wave-function for the interacting and the non-interacting case, but the strength of the oscillator potential mad the difference larger. 
+
+
+
 
 
 
