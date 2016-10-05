@@ -53,9 +53,9 @@
 \usepackage{bm}% bold math
 \usepackage{booktabs}% tables
 \usepackage{listings}% codelisting
-\usepackage{subcaption}% create subplots
 \usepackage[labelformat=parens,labelsep=quad,skip=3pt]{caption}% caption plots
 \usepackage{blindtext}% lorem ipsum...
+\usepackage{subcaption}% subplots 
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
 
@@ -73,7 +73,7 @@
 \newcommand{\ddrsq}{\frac{d^{2}}{dr^{2}}}
 \newcommand{\ddrhosq}{\frac{d^{2}}{d\rho^{2}}}
 \newcommand{\onehalf}{\frac{1}{2}}
-
+\renewcommand\abstractname{\textit{Abstract}}
 
 
 \begin{document}
@@ -97,37 +97,31 @@
 \affiliation{Student: University of Oslo, Department of Physics\\
  email-address: tellefs@student.matnat.uio.no}
 
-% % \collaboration{MUSO Collaboration}%\noaffiliation
+% \collaboration{MUSO Collaboration}%\noaffiliation
 
-% % \author{Charlie Author}
-% %  \homepage{http://www.Second.institution.edu/~Charlie.Author}
-% % \affiliation{
-% %  Second institution and/or address\\
-% %  This line break forced% with \\
-% % }%
-% % \affiliation{
-% %  Third institution, the second for Charlie Author
-% % }%
-% % \author{Delta Author}
-% % \affiliation{%
-% %  Authors' institution and/or address\\
-% %  This line break forced with \textbackslash\textbackslash
-% % }%
+% \author{Charlie Author}
+%  \homepage{http://www.Second.institution.edu/~Charlie.Author}
+% \affiliation{
+%  Second institution and/or address\\
+%  This line break forced% with \\
+% }%
+% \affiliation{
+%  Third institution, the second for Charlie Author
+% }%
+% \author{Delta Author}
+% \affiliation{%
+%  Authors' institution and/or address\\
+%  This line break forced with \textbackslash\textbackslash
+% }%
 
-% % \collaboration{CLEO Collaboration}%\noaffiliation
+% \collaboration{CLEO Collaboration}%\noaffiliation
 
 \date{\today}% It is always \today, today,
              %  but any date may be explicitly specified
 
 \begin{abstract}
-
-In this project we solve the Schrödinger equation for two electrons in a 3D harmonic oscillator potential. We solve with and without electron repulsion, and compare the results. When comparing these results we saw that the factor $\omega_R$, which reflected the strength of the oscillator potential, made the wave function for the interacting and the non-interacting case differ more than the Coulomb-potential which were added to simulate the electron repulsion. \\ 
-To accomplish this we apply a general method of discretizing the domain and reducing the problem to an eigenvalue equation. We thereafter apply Jacobi's rotation algorithm to obtain the eigenvalues of the matrix. This way of solving the eigenvalue-problem works in our case, but it is not as effective as using the Armadillo-library functions. We also apply the principles of unit testing by testing the algorithm for some simple problems with known solutions.\\\\
-All code for this project can be retrieved at this git-hub address :
-
-\begin{verbatim}
-https://github.com/tellefs/FYS3150/tree/master/project2
-\end{verbatim}
+In this project we solve the Schrodinger equation for two electrons in a 3-dimensional harmonic oscillator potential. We solve with and without electron repulsion, and compare the results. We find that varying the factor $\omega_{R}$, which reflects the strength of the oscillator potential, has a larger effect on the wavefunction than introducing the Coulomb repulsion. And we find that for a relatively small $\omega_R$ the Coulomb repulsion dominates the wavefunction. \\ 
+To accomplish this we apply a general method of discretizing the domain and reducing the problem to an eigenvalue equation. We thereafter apply Jacobi's rotation algorithm to obtain the eigenvalues of the matrix. This is a robust way of solving the eigenvalue-problem, but it is highly ineffective compared to the Armadillo-library functions, which take advantage of the sparsity of our matrix. We also apply the principles of unit testing by testing the algorithm for some simple problems with known solutions.\\\\
 
 % % An article usually includes an abstract, a concise summary of the work
 % % covered at length in the main body of the article. 
@@ -150,7 +144,8 @@ https://github.com/tellefs/FYS3150/tree/master/project2
 \maketitle
 
 \section{\label{sec:Int}Introduction}
-In this project we aim to solve the Schrödinger equation for two electrons in a 3D harmonic oscillator potential. We will be solving with and without the repulsive Coulomb potential, and comparing the results. For the case of no repulsion we have an analytical expression for the energies, and this will be useful in determining the accuracy of our results. Assume spherical symmetry.
+In this project we aim to solve the Schrodinger equation for two electrons in a 3D harmonic oscillator potential, with and without the repulsive Coulomb potential. For the case of no repulsion we have an analytical expression for the energies, and thus the eigenvalues of the Hamiltonian, and this will be useful in determining the accuracy of our results. Electrons confined to small areas form an exciting field of research, expected to have many applications to computing, material research and medicine. \\ \\
+We will be solving the radial part of Schrodinger's equation, assuming a spherically symmetric potential, from which the full wavefunction can be obtained by tacking on the solutions to the angular equation. We will also be examining the efficiency of Jacobi's rotation method in solving the eigenvalue equation. Jacobi's rotation method is known to be an inefficient method for most eigenvalue problems. It has however gained popularity in recent years for it's relatively simple implementation, which makes it a good candidate for parallellization.
 
 \section{\label{sec:The}Theory and methods}
 
@@ -219,7 +214,7 @@ and we obtain a discrete set of values for $\rho$,
 
 Replacing the second order derivative by the 2nd order central difference we can write our equation as 
 
-\begin{equation}
+\begin{equation}{\label{eq:11}}
 	-\frac{u_{i+1}+u_{i-1}-2u_{i}}{h^{2}} + \rho_{i}^{2}u_{i} = \lambda u_{i}
 \end{equation}
 
@@ -266,7 +261,7 @@ Since the endpoints are known we let $A$ be a matrix of dimension $(n-2)\cdot(n-
 where $u_{0} = u_{N-1} = 0$.
 
 \subsection{Coulomb Interaction}
-For two electrons with no Coulomb interaction in a harmonic oscillator potential the Schroedinger equation can be written as
+For two electrons with no Coulomb interaction in a harmonic oscillator potential the Schrodinger equation can be written as
 
 \begin{equation}
 	(\hbarm \frac{d^{2}}{dr_{1}^{2}} \hbarm \frac{d^{2}}{dr_{2}^{2}} + \onehalf k r_{1}{2} + k r_{2}^2)u(r_{1}, r_{2}) = Eu(r_{1}, r_{2})
@@ -278,7 +273,7 @@ With no interaction the two-electron wavefunction $u(r_{1}, r_{2})$ can be writt
 	(-\frac{\hbar^{2}}{m}\frac{d^{2}}{dr^{2}} - \frac{\hbar^{2}}{4m} \frac{d^{2}}{dR{2}} + \frac{1}{4}kr^{2} + kR^{2}) u(r, R) = Eu(r, R)
 \end{equation}
 
-the solution can be separated as $u(r, R) = \psi(r)\phi(R)$ and the energy is a sum of the relative energy $E_{r}$ and center-of-mass energy $E_{R}$
+The solution can be separated as $u(r, R) = \psi(r)\phi(R)$ and the energy is a sum of the relative energy $E_{r}$ and center-of-mass energy $E_{R}$
 
 \begin{equation}
 	E = E_{r} + E_{R}
@@ -290,7 +285,7 @@ adding the repulsive Coulomb interaction
 	V(r_{1}, r_{2}) = \frac{\beta e^{2}}{\left| \bm{r_{1}-r_{2}} \right|} = \frac{\beta e^{2}}{r}
 \end{equation}
 
-where $\beta e^{2}  = 1.44$ eVnm. The relative motion Schroedinger equation becomes
+where $\beta e^{2}  = 1.44$ eVnm. The relative motion Schrodinger equation becomes
 
 \begin{equation}
 	(-\frac{\hbar^{2}}{m}\frac{d^{2}}{dr^{2}} + \frac{1}{4}kr^{2} + \frac{\beta e^{2}}{r}) \psi(r) = E\psi(r)
@@ -314,9 +309,9 @@ and defining
 	\lambda = \frac{m\alpha^{2}}{\hbar^{2}} E
 \end{equation}
 
-and we obtain Schroedinger's equation
+and we obtain Schrodinger's equation
 
-\begin{equation}
+\begin{equation}\label{eq:22}
 	-\ddrhosq \psi(\rho) + \omega_{r}^{2}\rho^{2}\psi(\rho) + \frac{1}{\rho} = \lambda \psi(\rho)
 \end{equation}
 
@@ -383,7 +378,7 @@ Numerically it is sufficient that the largest non-diagonal element is smaller th
 	max(a_{ij}^{2}) \leq \epsilon
 \end{equation}
 
-Convergence is guaranteed with the Jacobi method, however the number of floating point operations is quite large, $\mathcal{O}(12n^{3})$ operations in order to zero out non-diagonal elements.
+Convergence is guaranteed with the Jacobi method, however the number of floating point operations is quite large, typically $\mathcal{O}(12n^{3} - 20n^{2})$ operations in order to zero out non-diagonal elements.
 
 %<<<<<<< HEAD
 %\subsection{Tests}
@@ -393,21 +388,18 @@ Convergence is guaranteed with the Jacobi method, however the number of floating
 %=======
 \subsection{Unit testing}
 In order to test the accuracy of our methods we can introduce some simple unit tests. For example we could check that our implementation of Jacobi's method for a simple symmetric matrix with known eigenvalues produces the exact results. For our problem the 3 lowest eigenvalues are known in the case of no interaction, and it is easy to test for example if our algorithm produces the lowest eigenvalue to some precision. \\
-In addition, the solutions to the Schroedinger equation form an orthogonal basis. In the previous subsection I show that an orthogonal transformation preserves orthogonality, so we can test our algorithm by checking to see if the resulting eigenvectors are orthogonal.\\
+In addition, the solutions to the Schrodinger equation form an orthogonal basis. In the previous subsection we show that an orthogonal transformation preserves orthogonality, so we test our algorithm by checking to see if the resulting eigenvectors are orthogonal.\\
 Finally, we test our function to find the maximum off-diagonal value of a matrix by testing it on a simple 3x3 symmetric matrix.
 %>>>>>>> 73d3c01504e8fb9524d03c3179d3c9bcaef5b424
 
 
 \section{RESULTS AND DISCUSSION}
 
-\subsection{Programming precision}
-% In the case of no electron interaction we know exactly the lowest 3 eigenvalues of the matrix $A$. To find the lowest eigenvalue $\lambda = 3$ we require roughly $N = 200$ mesh points to obtain an accuracy of $\left| \lambda - \lambda_{num} \right| \approx 0.0002$.
+\subsection{No interaction}
+First we checked how many mesh points $N$ we needed. We ran the program for equation \eqref{eq:11} where we knew the lowest eigenvalue $\lambda$ and wanted the difference $\left| \lambda_{theory} - \lambda_{num} \right|$ to be less than $10^{-4}$, or 4 leading digits. The lowest eigenvalue should have been $\lambda_{theory} = 3$ and we found that we needed roughly $N=200$ mesh points to obtain this precision.\\
+We also checked how many similarity transformations were needed before all the non-diagonal elements were essentially zero. In the program we checked this by adding a counter which checked how many times we rotated matrix elements. We found that with $N= 200$ mesh points, we needed approximately $66600$ transformations. Our tolerance when doing this was that the diagonal elements had to be smaller than $tol = 10^{-8}$.\\
 
-
-First we checked how many mesh points $N$ we needed. We ran the program for a system where we knew the lowest eigenvalue and wanted the difference to be less than $10^{-4}$. When doing this for a known problem where the lowest eigenvalue should have been $\lambda_{theory} = 3$ we found that we needed $N=200$ mesh points to get this precision.\\
-We also checked how many similarity transformations we needed before all the non-diagonal elements were essentially zero. In the program we checked this by adding a counter which checked how many times we rotated matrix elements. We found that with $N= 200$ mesh points, we needed approximately $66600$ transformations. Our tolerance when doing this was that the diagonal elements had to be lower than $tol = 10^{-8}$.\\
-
-Now that we found our right mesh point precision, we timed our algorithm and compared it to the $c++$ library Armadillo. In Table (1) the times are included.
+Now that we found our right mesh point precision, we timed our algorithm and compared it to the $C++$ library Armadillo. In Table (1) the times are included.
 
 \begin{table}[h]
 \centering
@@ -421,52 +413,59 @@ Armadillo        & $0.02$                \\ \hline
 \end{tabular}
 \end{table}
 
-From Table (1) we can see that the method we have used for finding the eigenvalues is very inefficient compared to the method Armadillo is using. We have then used the armadillo-function $eig\_ sym(A)$ which also solves for a symmetric matrix $A$ just like we have done in our Jacobi-method. The difference is while we assume the whole matrix is filled with elements, $eig\_sym$ takes advantage of the fact that we have a sparse matrix (we have a tridiagonal matrix where the rest of the elements are zeros).
+From Table (1) we can see that the method we have used for finding the eigenvalues is very inefficient compared to the method Armadillo is using. The problem with Jacobi's method is that applying the rotation will often add elements to the matrix which were previously zero. Relative to our matrix dimension $N = 200$, we required over 60 000 iterations to zero out non-diagonal elements. \\ \\
+We have then used the armadillo-function $eig\_ sym(A)$ which also solves for a symmetric matrix $A$ just like we have done in our Jacobi-method. The main difference is likely while we assume the whole matrix is filled with elements, $eig\_sym$ takes advantage of the fact that we have a sparse matrix (we have a tridiagonal matrix where the rest of the elements are zeros).
 
 \subsection{Coulomb interaction}
-In this project we were interested in the ground state energies. In the program, this would mean the eigenvector that corresponds to the lowest eigenvalue. Since we were only interested in the lowest state, and not the second-lowest etc. this was pretty straight forward.\\
+In this project we were interested in the ground state energies. For the Coulomb repulsion this corresponds to the eigenvector which has the lowest eigenvalue.\\
 
-Now we will compare the ground-state energies for the case where the electrons are interacting and when they are not interacting, for different values of $\omega_R$ (see figure (1), (2), (3), and (4)). We can see that for low values of $\omega_R$ the interacting case gives a wider wave-function (figure (1)). For higher $\omega_R$ the interacting and the non-interacting case gets closer (figure (2) and (3)), but when $\omega_R$ gets higher than $1$ they start to differ again. We can see that for $\omega_R = 5$ (figure (4)) the non-interacting case gets a narrower wave-function. This means that for higher $\omega_R$'s it will be easier to locate the electrons i.e. the probability to find them is higher.\\
-These results means that the $\omega_R$ factor changes the wave function more than the Coulomb-interaction $\frac{1}{\rho}$ (see Equation (22)) in our case. We can see this from Figure (3) where $\omega_R = 1$. This is the case where the wave-functions are most similar compared to the other plots (figure (1), (2), and (4)).\\ It must be said that we do not change the strength of the Coulomb interaction in this problem, and this might have had something to say when comparing these plots.
+We compare the ground-state energies for the case where the electrons are interacting and where they are not interacting, for different values of $\omega_R$ (see figures 1). We can see that for low values of $\omega_R$ the interacting case gives a wider wave-function (figure a). For higher $\omega_R$ the interacting and the non-interacting case get closer (figure b and c), but when $\omega_R$ increases they start to differ again. We can see that for $\omega_R = 5$ (figure d) the non-interacting case gets a narrower wave-function. This means that for higher $\omega_R$'s it will be easier to locate the electrons i.e. the probability to find them is higher in a smaller area.\\ \\
+These results mean that the $\omega_R$ factor has a higher significance for the wave-function than the Coulomb-interaction $1/ \rho$ (see Equation \eqref{eq:22}). We can see this from Figure (3) where $\omega_R = 1$. This is the case where the wave-functions are most similar compared to the other plots (figure (1), (2), and (4)), and in this case the Coulomb repulsion has a fairly small effect on the wave function.
 
- \begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textwidth]{../omega001.png}
-\caption{•}
-\label{fig:my_label}
-\end{figure}
+\begin{figure*}[t!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.2in]{../omega001.png}
+        \caption{Wavefunction for $\omega_{r} = 0.01$}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.2in]{../omega05.png}
+        \caption{Wavefunction for $\omega_{r} = 0.5$}
+    \end{subfigure}
 
- \begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textwidth]{../omega05.png}
-\caption{•}
-\label{fig:my_label}
-\end{figure}
-
- \begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textwidth]{../omega1.png}
-\caption{•}
-\label{fig:my_label}
-\end{figure}
-
- \begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textwidth]{../omega5.png}
-\caption{•}
-\label{fig:my_label}
-\end{figure}
-
-\section{CONCLUSION}
-
-In this project we implemented the Jacobi-algorithm to solve our eigenvalue problem. We saw that this might not have been the most effective way to solve this, but it worked for our purpose. \\
-We saw that the Coulomb-potential added a small change in the wave-function for the interacting and the non-interacting case, but the strength of the oscillator potential mad the difference larger. 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.2in]{../omega1.png}
+        \caption{Wavefunction for $\omega_{r} = 1$}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.2in]{../omega5.png}
+        \caption{Wavefunction for $\omega_{r} = 5$}
+    \end{subfigure}
+    \caption{Two-electron wavefunction for various values of $\omega_{R}$}
+\end{figure*}
 
 
+\section{Conclusion}
+In this project we have studied solutions to the Schrodinger equation in a 3D oscillator potential by solving the eigenvalue problem numerically. We have written an implementation of Jacobi's rotation method for our matrix, and found it to be highly inefficient for the problem we are considering, namely the tridiagonal eigenvalue problem. We find that we would be better served exploiting the sparsity of our matrix as in the armadillo eigenvalue solvers. We also find our method to severely limit the possible accuracy of the solution, as we cannot have a large number of mesh points.\\
 
+In addition, in solving, we find that the significance of the Coulomb repulsion between the two electrons greatly depends on the strength of the harmonic oscillator potential. And we also find that increasing it by a large factor ($\omega_{R}$ large) will give us highly localized electrons despite the electron repulsion.
 
+\section{Appendix}
+All code used is available at: \href{https://github.com/aglgit/FYS3150-1}{link} \\
+In this section I list the main parts of code used:
 
-
+\begin{description}
+\item [main.cpp] Main program used for running the various algorithms and writing to file the results.
+\item [functions.cpp] As a test of header file functionality I moved some of the operations to the functions file and called upon them in the main file.
+\item [plot.py] Program for plotting the text file output from main.cpp
+\item [plot\textunderscore eps.py] Program for plotting the max error
+\end{description}
 
 %\tableofcontents 
 
@@ -574,5 +573,6 @@ We saw that the Coulomb-potential added a small change in the wave-function for 
 % \verb+{+\emph{key-list}\verb+}+.
 
 \end{document}
+
 %
 % ****** End of file apssamp.tex ******
