@@ -1,4 +1,6 @@
 #include <iostream>
+#include "planets.h"
+#include "solver.h"
 
 using namespace std;
 
