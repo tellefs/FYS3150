@@ -214,4 +214,3 @@ mat constantMatrix(int L, double constant){
 
     return M;
 }
-

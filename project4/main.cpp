@@ -20,6 +20,7 @@ int main()
 {
 
     int L = 20; //number of rows/cols in the matrix
+     srand(time(NULL));
 
     /* Making matrix with random values 1 or -1.
      I have also made the matrix so that the matrix elements we are looking at are at index 1-L+1 (L elements in row and col.
@@ -34,9 +35,8 @@ int main()
 
     double beta_array [2] = {1.0, 1./2.4};
     const string tempFiles[] = {"dataT1.dat", "dataT24.dat"};
-    int mccMax = 1e5;
+    int mccMax = 1e6;
     double w [17];
-
 
 
 
@@ -147,7 +147,6 @@ void updateBoundary(mat& M, int L){
 
 mat randomMatrix(int L){
     mat M = mat(L+2,L+2);
-    srand(time(NULL));
 
     for(int i=1; i<L+1; i++){
         for(int j=1; j<L+1; j++){
