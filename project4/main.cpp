@@ -13,7 +13,7 @@ void updateBoundary(mat &M, int L);
 void updateExpectationValues(mat M, int L);
 
 mat randomMatrix(int L);
-//mat constantMatrix(int L, double constant);
+mat constantMatrix(int L, double constant);
 
 
 int main()
@@ -98,7 +98,7 @@ int main()
             meanM2 += M*M;
             meanMAbs += fabs(M);
 
-            outFile << meanE <<" "<< meanE2<<" "<< meanM <<" "<< meanM2 << " "<< success<<" "<< E << endl;
+            outFile << meanE <<" "<< meanE2<<" "<< meanM <<" "<< meanM2 << " "<< success<<" "<< E <<endl;
         }
         outFile.close();
         cout<<meanE/mccMax<<" "<<meanM/mccMax<<endl;
